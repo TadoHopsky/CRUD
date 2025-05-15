@@ -12,5 +12,8 @@
 <p th:text="${people.getEmail()}"></p>
 <p th:text="${people.getAddress()}"></p>
 
+<a th:href="@{/people/remove/{id}(id=${people.getId()})}">Удалить</a>
+
+<a href="/people/all">Все пользователи</a>
 </body>
 </html>
