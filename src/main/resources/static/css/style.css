@@ -1,0 +1,103 @@
+body {
+    font-family: 'Courier New', Courier, monospace;
+    background-color: #0d1117;
+    color: #58a6ff;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.container, .error-container {
+    text-align: center;
+    background-color: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 20px 40px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    animation: fadeIn 1.5s ease-in-out;
+}
+
+.error-container p {
+    margin-bottom: 20px; /* Увеличен отступ между сообщением об ошибке и кнопкой */
+}
+
+.container p {
+    margin-bottom: 20px; /* Отступ между текстом и кнопками в информации о пользователе */
+}
+
+.container a {
+    display: inline-block;
+    margin-top: 10px; /* Отступ между кнопками */
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #f85149;
+}
+
+p, ul {
+    font-size: 1.2rem;
+    margin: 10px 0;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+}
+
+ul li {
+    margin-bottom: 15px; /* Увеличен отступ между пользователями на главной странице */
+}
+
+li {
+    margin: 10px 0;
+}
+
+a {
+    text-decoration: none;
+    color: #58a6ff;
+    background-color: #0d1117;
+    border: 1px solid #58a6ff;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s;
+}
+
+a:hover {
+    background-color: #58a6ff;
+    color: #0d1117;
+    transform: scale(1.1);
+}
+
+.ascii-art {
+    font-size: 0.9rem;
+    color: #8b949e;
+    margin-bottom: 20px;
+    white-space: pre;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
