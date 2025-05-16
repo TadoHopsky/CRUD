@@ -10,11 +10,14 @@
 <canvas id="matrix"></canvas>
 <div class="container">
     <h1>Список пользователей</h1>
-    <ul>
-        <li th:each="person : ${allUsers}">
-            <a th:href="@{/people/{id}(id=${person.getId()})}" th:text="${person.getName()}"></a>
-        </li>
-    </ul>
+    <a href="/people/new" class="add-user-btn">Добавить пользователя</a>
+    <div class="users-list">
+        <ul>
+            <li th:each="person : ${allUsers}">
+                <a th:href="@{/people/{id}(id=${person.getId()})}" th:text="${person.getName()}"></a>
+            </li>
+        </ul>
+    </div>
 </div>
 <script src="/js/index.js"></script>
 </body>

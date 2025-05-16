@@ -1,12 +1,10 @@
 package com.example.sprintwebapp.controller;
 
 import com.example.sprintwebapp.DAO.DataAcscessObject;
+import com.example.sprintwebapp.Model.People;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 
 @Controller
@@ -22,6 +20,18 @@ public class MainController {
     public String index(Model model) {
         model.addAttribute("allUsers", dataAcscessObject.index());
         return "people";
+    }
+
+    @GetMapping("/new")
+    public String newUser(Model model) {
+        model.addAttribute("people", dataAcscessObject.newUser());
+        return "new";
+    }
+
+    @PostMapping("/new")
+    public String create(@ModelAttribute("people") People people) {
+        dataAcscessObject.save(people);
+        return "redirect:/people/all";
     }
 
     @GetMapping("/{id}")
