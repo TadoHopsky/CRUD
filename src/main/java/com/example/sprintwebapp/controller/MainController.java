@@ -28,7 +28,7 @@ public class MainController {
 
     @GetMapping("/new")
     public String newUser(Model model) {
-        model.addAttribute("people", dataAccessObject.newUser());
+        model.addAttribute("people", new People());
         return "new";
     }
 

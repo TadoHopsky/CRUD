@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.example</groupId>
-    <artifactId>SprintWebApp</artifactId>
+    <artifactId>SpringWebApp</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>SprintWebApp</name>
     <description>SprintWebApp</description>

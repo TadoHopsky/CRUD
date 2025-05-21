@@ -7,19 +7,16 @@ body {
     min-height: 100vh;
 }
 
-canvas {
-    display: none;
-}
-
 .container, .error-container {
     background: #fffdfa;
     border-radius: 18px;
     box-shadow: 0 4px 24px 0 rgba(180, 180, 180, 0.10), 0 1.5px 6px 0 rgba(180, 180, 180, 0.08);
-    padding: 36px 32px 32px 32px;
+    padding: 36px 16px 32px 16px;
     margin: 48px auto;
     max-width: 420px;
     width: 100%;
     text-align: left;
+    box-sizing: border-box;
 }
 
 h1 {
@@ -45,7 +42,7 @@ ul {
 ul li {
     margin-bottom: 18px;
     padding: 18px 20px;
-    background: #f3f6fa;
+    /*background: #f3f6fa;*/
     border-radius: 12px;
     box-shadow: 0 1px 4px 0 rgba(180, 180, 180, 0.06);
 }
@@ -152,34 +149,30 @@ form button[type="submit"]:hover {
     width: 100%;
 }
 
-@media (max-width: 600px) {
-    .container, .error-container {
-        padding: 18px 8px 18px 8px;
-        max-width: 98vw;
-    }
-
-    ul li {
-        padding: 12px 8px;
-    }
-}
-
 .main-header {
-    width: 100%;
+    width: 100vw;
+    min-width: 0;
     background: #f3f6fa;
     border-bottom: 1.5px solid #e3eafc;
     box-shadow: 0 2px 8px 0 rgba(180, 180, 180, 0.04);
     margin-bottom: 0;
     padding: 0;
+    position: relative;
+    left: 0;
+    top: 0;
 }
 
 .header-content {
+    width: 100%;
     max-width: 900px;
     margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 24px;
+    padding: 0 16px;
     height: 64px;
+    box-sizing: border-box;
+    min-width: 0;
 }
 
 .logo {
@@ -187,6 +180,11 @@ form button[type="submit"]:hover {
     font-weight: 700;
     color: #3a3a3a;
     letter-spacing: 0.03em;
+    white-space: nowrap;
+    transition: font-size 0.2s;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .theme-toggle {
@@ -198,26 +196,212 @@ form button[type="submit"]:hover {
     color: #3a3a3a;
     transition: color 0.2s;
     outline: none;
+    flex-shrink: 0;
+    align-self: center;
 }
 
 .theme-toggle:hover, .theme-toggle:focus {
     color: #c94f7c;
 }
 
-nav a {
-    margin-right: 18px;
-    font-weight: 500;
-    color: #2d2d2d;
+.main-accent-btn {
+    background: #ffb7b7;
+    color: #1e1e1e;
+    border: 2px solid #ff6f61;
+    font-weight: 700;
+    font-size: 1.12rem;
+    box-shadow: 0 2px 8px 0 rgba(255, 111, 97, 0.08);
+    transition: background 0.2s, color 0.2s, border 0.2s, box-shadow 0.2s;
+}
+
+.main-accent-btn:hover, .main-accent-btn:focus {
+    background: #ff6f61;
+    color: #fffdfa;
+    border-color: #ffb7b7;
+    box-shadow: 0 4px 16px 0 rgba(255, 111, 97, 0.16);
+}
+
+/* Сетка для отображения пользователей в 3 колонки */
+.users-list.grid-list ul {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* 3 колонки */
+    gap: 20px; /* Расстояние между элементами */
+    padding: 0;
+    margin: 36px auto 0 auto;
+    max-width: 100%;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.users-list.grid-list ul li {
+    padding: 20px;
+    text-align: center;
+    font-size: 1.1rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: color 0.2s;
+    background: none; /* Убираем фон */
+    border: none; /* Убираем рамки */
+    box-shadow: none; /* Убираем тени */
+}
+
+.users-list.grid-list ul li a {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: #ffffff; /* Делаем текст белым */
     text-decoration: none;
     transition: color 0.2s;
+    word-break: break-word;
+    white-space: normal;
+    width: 100%;
+    display: block;
 }
 
-nav a:last-child {
-    margin-right: 0;
+.users-list.grid-list ul li a:hover {
+    color: #ff6f61; /* Цвет текста при наведении */
+    text-decoration: underline;
 }
 
-nav a:hover {
-    color: #c94f7c;
+/* Адаптивность */
+@media (max-width: 1200px) {
+    .users-list.grid-list ul {
+        /* Удалено */
+    }
+}
+
+@media (max-width: 900px) {
+    .container, .error-container {
+        max-width: 98vw;
+        padding: 18px 4vw 18px 4vw;
+    }
+
+    .users-list.grid-list ul {
+        grid-template-columns: repeat(2, 1fr); /* 2 колонки */
+    }
+
+    .users-list.grid-list ul li {
+        /* Удалено */
+    }
+
+    .main-accent-btn, .add-user-btn, .edit-btn, .delete-btn {
+        padding: 7px 10px;
+        font-size: 0.98rem;
+    }
+
+    .add-user-btn,
+    .edit-btn,
+    .delete-btn,
+    .main-accent-btn {
+        padding: 8px 16px; /* Уменьшаем отступы */
+        height: auto; /* Убираем растягивание */
+        line-height: 1.2; /* Устанавливаем нормальную высоту строки */
+        display: inline-block; /* Гарантируем, что кнопки не растягиваются */
+        text-align: center; /* Центрируем текст */
+        font-size: 1rem; /* Уменьшаем шрифт для компактности */
+    }
+}
+
+@media (max-width: 700px) {
+    .users-list.grid-list ul {
+        /* Удалено */
+    }
+
+    .users-list.grid-list ul li {
+        /* Удалено */
+    }
+
+    .main-accent-btn, .add-user-btn, .edit-btn, .delete-btn {
+        padding: 6px 4px;
+        font-size: 0.93rem;
+        margin: 0 2px 4px 0;
+    }
+
+    .logo {
+        display: none;
+    }
+
+    .header-content {
+        padding: 0 8px;
+        height: 48px;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0;
+    }
+
+    .add-user-btn,
+    .edit-btn,
+    .delete-btn,
+    .main-accent-btn {
+        padding: 6px 12px; /* Ещё меньше отступы */
+        font-size: 0.93rem; /* Уменьшаем шрифт */
+        margin: 0 2px 4px 0;
+    }
+}
+
+@media (max-width: 600px) {
+    .users-list.grid-list ul {
+        grid-template-columns: 1fr; /* 1 колонка */
+    }
+}
+
+@media (max-width: 400px) {
+    .container, .error-container {
+        padding: 2px 1vw 2px 1vw;
+    }
+
+    .users-list.grid-list ul li {
+        /* Удалено */
+    }
+
+    .main-accent-btn, .add-user-btn, .edit-btn, .delete-btn {
+        padding: 4px 1px;
+        font-size: 0.89rem;
+    }
+
+    .add-user-btn,
+    .edit-btn,
+    .delete-btn,
+    .main-accent-btn {
+        padding: 4px 8px; /* Минимальные отступы */
+        font-size: 0.85rem; /* Ещё меньше шрифт */
+    }
+}
+
+/* Добавляем правило для десктопа, чтобы кнопки не растягивались по высоте */
+@media (min-width: 901px) {
+    .add-user-btn,
+    .edit-btn,
+    .delete-btn,
+    .main-accent-btn {
+        padding: 10px 20px; /* Уменьшаем отступы */
+        height: auto; /* Убираем растягивание */
+        line-height: 1.5; /* Устанавливаем нормальную высоту строки */
+        display: inline-block; /* Гарантируем, что кнопки не растягиваются */
+        text-align: center; /* Центрируем текст */
+    }
+
+    .users-list.grid-list {
+        max-width: 1200px; /* Увеличиваем максимальную ширину */
+        margin: 36px auto; /* Центрируем список */
+    }
+
+    .users-list.grid-list ul {
+        grid-template-columns: repeat(3, 1fr); /* 3 колонки */
+        gap: 30px; /* Увеличиваем расстояние между элементами */
+    }
+
+    .users-list.grid-list ul li {
+        padding: 24px 20px; /* Увеличиваем внутренние отступы */
+        font-size: 1.2rem; /* Увеличиваем шрифт */
+    }
+
+    .container {
+        max-width: 800px; /* Увеличиваем максимальную ширину */
+        padding: 40px 24px; /* Увеличиваем внутренние отступы */
+    }
 }
 
 /* Тёмная тема */
@@ -315,80 +499,4 @@ body.dark-theme form button[type="submit"]:hover {
 
 body.dark-theme .error-message {
     color: #ffb4b4;
-}
-
-.main-accent-btn {
-    background: #ffb7b7;
-    color: #1e1e1e;
-    border: 2px solid #ff6f61;
-    font-weight: 700;
-    font-size: 1.12rem;
-    box-shadow: 0 2px 8px 0 rgba(255, 111, 97, 0.08);
-    transition: background 0.2s, color 0.2s, border 0.2s, box-shadow 0.2s;
-}
-
-.main-accent-btn:hover, .main-accent-btn:focus {
-    background: #ff6f61;
-    color: #fffdfa;
-    border-color: #ffb7b7;
-    box-shadow: 0 4px 16px 0 rgba(255, 111, 97, 0.16);
-}
-
-.users-list.grid-list ul {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 28px;
-    justify-items: center;
-    align-items: stretch;
-    padding: 0;
-    margin: 36px auto 0 auto;
-    max-width: 100%;
-}
-
-.users-list.grid-list ul li {
-    background: #f3f6fa;
-    border-radius: 14px;
-    box-shadow: 0 1px 6px 0 rgba(180, 180, 180, 0.10);
-    padding: 32px 18px;
-    text-align: center;
-    min-width: 0;
-    width: 100%;
-    font-size: 1.08rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: box-shadow 0.2s, background 0.2s;
-}
-
-.users-list.grid-list ul li a {
-    font-size: 1.12rem;
-    font-weight: 600;
-    color: #2d2d2d;
-    text-decoration: none;
-    transition: color 0.2s;
-    padding: 0;
-    background: none;
-    border: none;
-    box-shadow: none;
-}
-
-.users-list.grid-list ul li a:hover {
-    color: #ff6f61;
-    text-decoration: underline;
-}
-
-@media (max-width: 1200px) {
-    .users-list.grid-list ul {
-        grid-template-columns: repeat(2, 1fr);
-    }
-}
-
-@media (max-width: 700px) {
-    .users-list.grid-list ul {
-        grid-template-columns: 1fr;
-    }
-
-    .users-list.grid-list ul li {
-        padding: 20px 8px;
-    }
 }

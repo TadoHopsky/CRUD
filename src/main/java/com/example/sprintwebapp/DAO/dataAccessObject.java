@@ -27,10 +27,6 @@ public class dataAccessObject {
         peopleList.add(new People(CURRENT_ID++, 40, "Дмитрий Павлов", "dmitry@pavlov.com", "Moscow"));
     }
 
-    public People newUser() {
-        return new People();
-    }
-
     public void saveUser(People people) {
         people.setId(CURRENT_ID++);
         peopleList.add(people);
