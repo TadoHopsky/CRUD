@@ -1,7 +1,6 @@
 package com.example.springWebApp.DAO;
 
 import com.example.springWebApp.Model.People;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -9,14 +8,13 @@ import java.util.List;
 
 @Service
 public class DataAccessObject {
+    private final List<People> peopleList = new ArrayList<>();
+    private int CURRENT_ID = 0;
 
-    @Autowired
     public DataAccessObject(People people) {
     }
 
-    List<People> peopleList = new ArrayList<>();
-    private int CURRENT_ID = 0;
-
+    // Затычка пока не подключена БД
     {
         peopleList.add(new People(CURRENT_ID, 27, "Егор Антипов", "egor@antipov.com", "Moscow"));
         peopleList.add(new People(CURRENT_ID++, 31, "Анна Смирнова", "anna@smirnova.com", "Tomsk"));
