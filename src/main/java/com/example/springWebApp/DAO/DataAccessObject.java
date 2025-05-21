@@ -50,6 +50,6 @@ public class DataAccessObject {
                 .filter(p -> p.getId() == id)
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("Пользователь с ID " + id + " не найден."));
-        person.copyUserInfoIntoNewUser(newData);
+        person.copyUserInfoIntoNewPerson(newData);
     }
 }

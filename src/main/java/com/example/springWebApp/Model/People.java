@@ -33,10 +33,10 @@ public class People {
     @Size(min = 3, max = 40)
     private String address;
 
-    public void copyUserInfoIntoNewUser(People people) {
-        this.age = people.getAge();
-        this.name = people.getName();
-        this.email = people.getEmail();
-        this.address = people.getAddress();
+    public void copyUserInfoIntoNewPerson(People newPerson) {
+        this.age = newPerson.getAge();
+        this.name = newPerson.getName();
+        this.email = newPerson.getEmail();
+        this.address = newPerson.getAddress();
     }
 }
