@@ -13,10 +13,10 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 
 @Controller
 @RequestMapping("/people")
-public class MainController {
+public class PeopleController {
     private final dataAccessObject dataAccessObject;
 
-    public MainController(dataAccessObject dataAccessObject) {
+    public PeopleController(dataAccessObject dataAccessObject) {
         this.dataAccessObject = dataAccessObject;
     }
 

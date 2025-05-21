@@ -1,6 +1,7 @@
 package com.example.sprintwebapp.DAO;
 
-import com.example.sprintwebapp.Model.People;
+import com.example.springWebApp.DAO.dataAccessObject;
+import com.example.springWebApp.Model.People;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

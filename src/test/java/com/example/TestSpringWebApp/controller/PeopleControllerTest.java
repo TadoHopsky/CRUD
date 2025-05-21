@@ -1,7 +1,8 @@
 package com.example.sprintwebapp.controller;
 
-import com.example.sprintwebapp.DAO.dataAccessObject;
-import com.example.sprintwebapp.Model.People;
+import com.example.springWebApp.DAO.dataAccessObject;
+import com.example.springWebApp.Model.People;
+import com.example.springWebApp.controller.PeopleController;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
@@ -17,8 +18,8 @@ import static org.mockito.ArgumentMatchers.anyInt;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@WebMvcTest(MainController.class)
-class MainControllerTest {
+@WebMvcTest(PeopleController.class)
+class PeopleControllerTest {
 
     @Autowired
     private MockMvc mockMvc;

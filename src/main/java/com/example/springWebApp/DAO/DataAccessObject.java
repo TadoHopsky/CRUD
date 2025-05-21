@@ -15,7 +15,7 @@ public class dataAccessObject {
     }
 
     List<People> peopleList = new ArrayList<>();
-    int CURRENT_ID = 0;
+    private int CURRENT_ID = 0;
 
     {
         peopleList.add(new People(CURRENT_ID, 27, "Егор Антипов", "egor@antipov.com", "Moscow"));

@@ -1,5 +1,6 @@
 package com.example.sprintwebapp.Model;
 
+import com.example.springWebApp.Model.People;
 import jakarta.validation.Validation;
 import jakarta.validation.Validator;
 import jakarta.validation.ValidatorFactory;
