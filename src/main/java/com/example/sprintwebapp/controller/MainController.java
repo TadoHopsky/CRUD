@@ -1,54 +1,72 @@
 package com.example.sprintwebapp.controller;
 
-import com.example.sprintwebapp.DAO.DataAcscessObject;
+import com.example.sprintwebapp.DAO.dataAccessObject;
 import com.example.sprintwebapp.Model.People;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.filter.HiddenHttpMethodFilter;
 
 @Controller
 @RequestMapping("/people")
 public class MainController {
-    private final DataAcscessObject dataAcscessObject;
+    private final dataAccessObject dataAccessObject;
 
-    public MainController(DataAcscessObject dataAcscessObject) {
-        this.dataAcscessObject = dataAcscessObject;
+    public MainController(dataAccessObject dataAccessObject) {
+        this.dataAccessObject = dataAccessObject;
     }
 
     @GetMapping("/all")
     public String index(Model model) {
-        model.addAttribute("allUsers", dataAcscessObject.index());
+        model.addAttribute("allUsers", dataAccessObject.index());
         return "people";
     }
 
     @GetMapping("/new")
     public String newUser(Model model) {
-        model.addAttribute("people", dataAcscessObject.newUser());
+        model.addAttribute("people", dataAccessObject.newUser());
         return "new";
     }
 
     @PostMapping("/new")
     public String create(@ModelAttribute("people") People people) {
-        dataAcscessObject.save(people);
+        dataAccessObject.saveUser(people);
         return "redirect:/people/all";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable Integer id, Model model) {
-        model.addAttribute("people", dataAcscessObject.show(id));
+        model.addAttribute("people", dataAccessObject.show(id));
         return "show";
     }
 
-    @GetMapping("/remove/{id}")
+    @GetMapping("/{id}/edit")
+    public String edit(@PathVariable Integer id, Model model) {
+        model.addAttribute("people", dataAccessObject.show(id));
+        return "edit";
+    }
+
+    @PatchMapping("/{id}")
+    public String update(@ModelAttribute("people") People people, @PathVariable Integer id) {
+        dataAccessObject.updateUserById(id, people);
+        return "redirect:/people/all";
+    }
+
+    @DeleteMapping("remove/{id}")
     public String remove(@PathVariable Integer id) {
-        dataAcscessObject.remove(id);
+        dataAccessObject.removeUserById(id);
         return "redirect:/people/all";
     }
 
 
-    //======================= Error Handling ==========================
+    //================= HiddenHttpMethodFilter ========================
+    @Bean
+    public HiddenHttpMethodFilter hiddenHttpMethodFilter() {
+        return new HiddenHttpMethodFilter();
+    }
 
+    //======================= Error Handling ==========================
     @ExceptionHandler(Exception.class)
     public String handleException(Exception e, Model model) {
         model.addAttribute("error", e.getMessage());

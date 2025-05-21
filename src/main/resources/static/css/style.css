@@ -192,3 +192,27 @@ form button[type="submit"]:hover {
         grid-template-columns: repeat(3, 1fr);
     }
 }
+
+.delete-btn {
+    background-color: #0d1117;
+    color: #f85149;
+    border: 2px solid #f85149;
+    padding: 10px 20px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s, border-color 0.3s;
+    margin-right: 12px;
+    margin-bottom: 5px;
+    display: inline-block;
+    outline: none;
+}
+
+.delete-btn:hover, .delete-btn:focus {
+    background-color: #f85149;
+    color: #0d1117;
+    border-color: #f85149;
+    transform: scale(1.08);
+}
+

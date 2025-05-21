@@ -10,11 +10,17 @@
 <canvas id="matrix"></canvas>
 <div class="container">
     <h1>Информация о пользователе</h1>
-    <p th:text="${people.getName()}"></p>
-    <p th:text="${people.getEmail()}"></p>
-    <p th:text="${people.getAddress()}"></p>
-    <a th:href="@{/people/remove/{id}(id=${people.getId()})}">Удалить</a>
-    <a href="/people/all">Все пользователи</a>
+    <div id="user-info">
+        <p><b>Имя:</b> <span th:text="${people.name}"></span></p>
+        <p><b>Email:</b> <span th:text="${people.email}"></span></p>
+        <p><b>Адрес:</b> <span th:text="${people.address}"></span></p>
+        <form th:action="@{/people/remove/{id}(id=${people.id})}" method="post" style="display:inline;">
+            <input type="hidden" name="_method" value="delete"/>
+            <button type="submit" class="delete-btn">Удалить</button>
+        </form>
+        <a th:href="@{/people/{id}/edit(id=${people.id})}" class="edit-btn">Изменить</a>
+        <a href="/people/all">Все пользователи</a>
+    </div>
 </div>
 <script src="/js/index.js"></script>
 </body>
