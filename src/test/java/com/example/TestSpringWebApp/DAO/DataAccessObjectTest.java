@@ -1,6 +1,6 @@
-package com.example.sprintwebapp.DAO;
+package com.example.TestSpringWebApp.DAO;
 
-import com.example.springWebApp.DAO.dataAccessObject;
+import com.example.springWebApp.DAO.DataAccessObject;
 import com.example.springWebApp.Model.People;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -9,13 +9,13 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class dataAccessObjectTest {
+class DataAccessObjectTest {
 
-    private dataAccessObject dao;
+    private DataAccessObject dao;
 
     @BeforeEach
     void setUp() {
-        dao = new dataAccessObject(new People());
+        dao = new DataAccessObject(new People());
     }
 
     @Test

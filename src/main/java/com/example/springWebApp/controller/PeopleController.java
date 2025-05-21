@@ -1,22 +1,19 @@
-package com.example.sprintwebapp.controller;
+package com.example.springWebApp.controller;
 
-import com.example.sprintwebapp.DAO.dataAccessObject;
-import com.example.sprintwebapp.Model.People;
+import com.example.springWebApp.DAO.DataAccessObject;
+import com.example.springWebApp.Model.People;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.context.annotation.Bean;
-import org.springframework.web.filter.HiddenHttpMethodFilter;
-import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 @Controller
 @RequestMapping("/people")
 public class PeopleController {
-    private final dataAccessObject dataAccessObject;
+    private final DataAccessObject dataAccessObject;
 
-    public PeopleController(dataAccessObject dataAccessObject) {
+    public PeopleController(DataAccessObject dataAccessObject) {
         this.dataAccessObject = dataAccessObject;
     }
 
@@ -67,19 +64,5 @@ public class PeopleController {
     public String remove(@PathVariable Integer id) {
         dataAccessObject.removeUserById(id);
         return "redirect:/people/all";
-    }
-
-
-    //================= HiddenHttpMethodFilter ========================
-    @Bean
-    public HiddenHttpMethodFilter hiddenHttpMethodFilter() {
-        return new HiddenHttpMethodFilter();
-    }
-
-    //======================= Error Handling ==========================
-    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    public String handleTypeMismatch(MethodArgumentTypeMismatchException e, Model model) {
-        model.addAttribute("error", "Некорректный идентификатор пользователя в адресе: " + e.getValue());
-        return "error";
     }
 }

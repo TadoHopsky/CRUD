@@ -1,6 +1,6 @@
-package com.example.sprintwebapp.DAO;
+package com.example.springWebApp.DAO;
 
-import com.example.sprintwebapp.Model.People;
+import com.example.springWebApp.Model.People;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -8,10 +8,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class dataAccessObject {
+public class DataAccessObject {
 
     @Autowired
-    public dataAccessObject(People people) {
+    public DataAccessObject(People people) {
     }
 
     List<People> peopleList = new ArrayList<>();
@@ -48,19 +48,10 @@ public class dataAccessObject {
     }
 
     public void updateUserById(int id, People newData) {
-        peopleList.stream()
+        People person = peopleList.stream()
                 .filter(p -> p.getId() == id)
                 .findFirst()
-                .ifPresentOrElse(
-                        p -> {
-                            p.setAge(newData.getAge());
-                            p.setName(newData.getName());
-                            p.setEmail(newData.getEmail());
-                            p.setAddress(newData.getAddress());
-                        },
-                        () -> {
-                            throw new RuntimeException("Пользователь с ID " + id + " не найден.");
-                        }
-                );
+                .orElseThrow(() -> new RuntimeException("Пользователь с ID " + id + " не найден."));
+        person.copyUserInfoIntoNewUser(newData);
     }
 }

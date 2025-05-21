@@ -1,6 +1,6 @@
-package com.example.sprintwebapp.controller;
+package com.example.TestSpringWebApp.controller;
 
-import com.example.springWebApp.DAO.dataAccessObject;
+import com.example.springWebApp.DAO.DataAccessObject;
 import com.example.springWebApp.Model.People;
 import com.example.springWebApp.controller.PeopleController;
 import org.junit.jupiter.api.BeforeEach;
@@ -25,7 +25,7 @@ class PeopleControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private dataAccessObject dataAccessObject;
+    private DataAccessObject dataAccessObject;
 
     private List<People> mockPeopleList;
 

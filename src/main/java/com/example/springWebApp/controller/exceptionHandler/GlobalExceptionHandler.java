@@ -1,4 +1,4 @@
-package com.example.springWebApp.controller.globalExceptionHandler;
+package com.example.springWebApp.controller.exceptionHandler;
 
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;

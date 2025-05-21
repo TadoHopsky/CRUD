@@ -1,4 +1,4 @@
-package com.example.sprintwebapp.Model;
+package com.example.TestSpringWebApp.Model;
 
 import com.example.springWebApp.Model.People;
 import jakarta.validation.Validation;

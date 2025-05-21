@@ -1,4 +1,4 @@
-package com.example.sprintwebapp.Model;
+package com.example.springWebApp.Model;
 
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
@@ -32,4 +32,11 @@ public class People {
     @NotEmpty(message = "Can not be empty:(")
     @Size(min = 3, max = 40)
     private String address;
+
+    public void copyUserInfoIntoNewUser(People people) {
+        this.age = people.getAge();
+        this.name = people.getName();
+        this.email = people.getEmail();
+        this.address = people.getAddress();
+    }
 }
