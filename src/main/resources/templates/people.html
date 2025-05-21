@@ -7,11 +7,16 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-<canvas id="matrix"></canvas>
+<header class="main-header">
+    <div class="header-content">
+        <span class="logo">Sprint Web App</span>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Переключить тему">🌙</button>
+    </div>
+</header>
 <div class="container">
     <h1>Список пользователей</h1>
-    <a href="/people/new" class="add-user-btn">Добавить пользователя</a>
-    <div class="users-list">
+    <a href="/people/new" class="add-user-btn main-accent-btn">Добавить пользователя</a>
+    <div class="users-list grid-list">
         <ul>
             <li th:each="person : ${allUsers}">
                 <a th:href="@{/people/{id}(id=${person.getId()})}" th:text="${person.getName()}"></a>
@@ -20,5 +25,19 @@
     </div>
 </div>
 <script src="/js/index.js"></script>
+<script>
+    document.getElementById('theme-toggle').addEventListener('click', function () {
+        document.body.classList.toggle('dark-theme');
+        localStorage.setItem('theme', document.body.classList.contains('dark-theme') ? 'dark' : 'light');
+        this.textContent = document.body.classList.contains('dark-theme') ? '☀️' : '🌙';
+    });
+    (function () {
+        const theme = localStorage.getItem('theme');
+        if (theme === 'dark') {
+            document.body.classList.add('dark-theme');
+            document.getElementById('theme-toggle').textContent = '☀️';
+        }
+    })();
+</script>
 </body>
 </html>

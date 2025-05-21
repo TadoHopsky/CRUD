@@ -18,19 +18,13 @@ public class dataAccessObject {
     int CURRENT_ID = 0;
 
     {
-        peopleList.add(new People(CURRENT_ID, "John Doe", "john123123@mail.ru", "Moscow"));
-        peopleList.add(new People(CURRENT_ID++, "Tado Hopsky", "tadohopsky@mail.ru", "Tomsk"));
-        peopleList.add(new People(CURRENT_ID++, "Masha Ivanova", "masha13241@gmail.com", "Moscow"));
-        peopleList.add(new People(CURRENT_ID++, "Masha Ivanova", "masha13241@gmail.com", "Moscow"));
-        peopleList.add(new People(CURRENT_ID++, "Masha Ivanova", "masha13241@gmail.com", "Moscow"));
-        peopleList.add(new People(CURRENT_ID++, "Masha Ivanova", "masha13241@gmail.com", "Moscow"));
-        peopleList.add(new People(CURRENT_ID++, "Masha Ivanova", "masha13241@gmail.com", "Moscow"));
-        peopleList.add(new People(CURRENT_ID++, "Masha Ivanova", "masha13241@gmail.com", "Moscow"));
-        peopleList.add(new People(CURRENT_ID++, "Masha Ivanova", "masha13241@gmail.com", "Moscow"));
-        peopleList.add(new People(CURRENT_ID++, "Masha Ivanova", "masha13241@gmail.com", "Moscow"));
-        peopleList.add(new People(CURRENT_ID++, "Masha Ivanova", "masha13241@gmail.com", "Moscow"));
-        peopleList.add(new People(CURRENT_ID++, "Masha Ivanova", "masha13241@gmail.com", "Moscow"));
-
+        peopleList.add(new People(CURRENT_ID, 27, "Егор Антипов", "egor@antipov.com", "Moscow"));
+        peopleList.add(new People(CURRENT_ID++, 31, "Анна Смирнова", "anna@smirnova.com", "Tomsk"));
+        peopleList.add(new People(CURRENT_ID++, 34, "Иван Козлов", "ivan@kozlov.com", "Moscow"));
+        peopleList.add(new People(CURRENT_ID++, 29, "Мария Соколова", "maria@sokolova.com", "Moscow"));
+        peopleList.add(new People(CURRENT_ID++, 38, "Алексей Орлов", "alexey@orlov.com", "Moscow"));
+        peopleList.add(new People(CURRENT_ID++, 26, "Ольга Белова", "olga@belova.com", "Moscow"));
+        peopleList.add(new People(CURRENT_ID++, 40, "Дмитрий Павлов", "dmitry@pavlov.com", "Moscow"));
     }
 
     public People newUser() {
@@ -63,6 +57,7 @@ public class dataAccessObject {
                 .findFirst()
                 .ifPresentOrElse(
                         p -> {
+                            p.setAge(newData.getAge());
                             p.setName(newData.getName());
                             p.setEmail(newData.getEmail());
                             p.setAddress(newData.getAddress());

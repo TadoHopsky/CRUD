@@ -2,8 +2,10 @@ package com.example.sprintwebapp.controller;
 
 import com.example.sprintwebapp.DAO.dataAccessObject;
 import com.example.sprintwebapp.Model.People;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
@@ -30,7 +32,10 @@ public class MainController {
     }
 
     @PostMapping("/new")
-    public String create(@ModelAttribute("people") People people) {
+    public String create(@ModelAttribute("people") @Valid People people, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            return "new";
+        }
         dataAccessObject.saveUser(people);
         return "redirect:/people/all";
     }
@@ -48,7 +53,11 @@ public class MainController {
     }
 
     @PatchMapping("/{id}")
-    public String update(@ModelAttribute("people") People people, @PathVariable Integer id) {
+    public String update(@ModelAttribute("people") @Valid People people, BindingResult bindingResult,
+                         @PathVariable Integer id) {
+        if (bindingResult.hasErrors()) {
+            return "edit";
+        }
         dataAccessObject.updateUserById(id, people);
         return "redirect:/people/all";
     }

@@ -7,26 +7,52 @@
     <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-<canvas id="matrix"></canvas>
+<header class="main-header">
+    <div class="header-content">
+        <span class="logo">Sprint Web App</span>
+        <button id="theme-toggle" class="theme-toggle" aria-label="Переключить тему">🌙</button>
+    </div>
+</header>
 <div class="container">
     <h1>Добавить пользователя</h1>
     <form th:action="@{/people/new}" th:object="${people}" method="post">
         <div>
             <label for="name">Имя:</label>
-            <input type="text" id="name" th:field="*{name}" required>
+            <input type="text" id="name" th:field="*{name}" placeholder="firstName lastNam" required>
+            <div class="error-message" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+        </div>
+        <div>
+            <label for="age">Возраст:</label>
+            <input type="text" id="age" th:field="*{age}" placeholder="от 1 до 110" required>
+            <div class="error-message" th:if="${#fields.hasErrors('age')}" th:errors="*{age}"></div>
         </div>
         <div>
             <label for="email">Email:</label>
-            <input type="email" id="email" th:field="*{email}" required>
+            <input type="email" id="email" th:field="*{email}" placeholder="youremail@mail.com" required>
+            <div class="error-message" th:if="${#fields.hasErrors('email')}" th:errors="*{email}"></div>
         </div>
         <div>
             <label for="address">Адрес:</label>
-            <input type="text" id="address" th:field="*{address}" required>
+            <input type="text" id="address" th:field="*{address}" placeholder="your city, street number" required>
+            <div class="error-message" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></div>
         </div>
         <button type="submit">Добавить</button>
     </form>
     <a href="/people/all">Назад к списку</a>
 </div>
-<script src="/js/index.js"></script>
+<script>
+    document.getElementById('theme-toggle').addEventListener('click', function () {
+        document.body.classList.toggle('dark-theme');
+        localStorage.setItem('theme', document.body.classList.contains('dark-theme') ? 'dark' : 'light');
+        this.textContent = document.body.classList.contains('dark-theme') ? '☀️' : '🌙';
+    });
+    (function () {
+        const theme = localStorage.getItem('theme');
+        if (theme === 'dark') {
+            document.body.classList.add('dark-theme');
+            document.getElementById('theme-toggle').textContent = '☀️';
+        }
+    })();
+</script>
 </body>
 </html>
