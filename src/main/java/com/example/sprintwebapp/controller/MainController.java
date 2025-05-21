@@ -9,6 +9,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 @Controller
 @RequestMapping("/people")
@@ -76,9 +77,9 @@ public class MainController {
     }
 
     //======================= Error Handling ==========================
-    @ExceptionHandler(Exception.class)
-    public String handleException(Exception e, Model model) {
-        model.addAttribute("error", e.getMessage());
+    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
+    public String handleTypeMismatch(MethodArgumentTypeMismatchException e, Model model) {
+        model.addAttribute("error", "Некорректный идентификатор пользователя в адресе: " + e.getValue());
         return "error";
     }
 }
