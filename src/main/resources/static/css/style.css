@@ -1,502 +1,313 @@
-body {
-    font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
-    background: #f7f5f2;
-    color: #2d2d2d;
+
+:root {
+    --bg-main: #f6f7f9;
+    --accent: #6c63ff;
+    --accent2: #ffb6b9;
+    --text-main: #232946;
+    --text-light: #fff;
+    --shadow: 0 4px 24px 0 rgba(44, 62, 80, 0.08);
+    --radius: 18px;
+    --transition: 0.25s cubic-bezier(.4, 0, .2, 1);
+}
+
+html, body {
     margin: 0;
     padding: 0;
+    background: var(--bg-main);
+    color: var(--text-main);
+    font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+    font-size: 18px;
     min-height: 100vh;
 }
 
-.container, .error-container {
-    background: #fffdfa;
-    border-radius: 18px;
-    box-shadow: 0 4px 24px 0 rgba(180, 180, 180, 0.10), 0 1.5px 6px 0 rgba(180, 180, 180, 0.08);
-    padding: 36px 16px 32px 16px;
-    margin: 48px auto;
-    max-width: 420px;
-    width: 100%;
-    text-align: left;
-    box-sizing: border-box;
+.main-header {
+    width: 100vw;
+    background: var(--text-light);
+    box-shadow: var(--shadow);
+    padding: 0;
+    margin: 0 0 32px 0;
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px;
+    padding: 0 32px;
+}
+
+.logo {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 2px;
+    transition: font-size var(--transition);
+    white-space: nowrap;
+}
+
+.theme-toggle {
+    background: var(--accent2);
+    color: var(--text-main);
+    border: none;
+    border-radius: 50%;
+    width: 44px;
+    height: 44px;
+    font-size: 1.3rem;
+    cursor: pointer;
+    transition: background var(--transition), color var(--transition);
+    box-shadow: var(--shadow);
+    margin-left: 16px;
+}
+
+.theme-toggle:hover {
+    background: var(--accent);
+    color: var(--text-light);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    background: var(--text-light);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 40px 32px 32px 32px;
+    margin-bottom: 32px;
 }
 
 h1 {
-    font-size: 2.1rem;
+    font-size: 2.2rem;
     font-weight: 700;
-    color: #3a3a3a;
-    margin-bottom: 28px;
-    letter-spacing: 0.01em;
-}
-
-p, ul, li, label {
-    font-size: 1.08rem;
-    color: #3a3a3a;
-    margin: 0 0 12px 0;
-}
-
-ul {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 18px 0;
-}
-
-ul li {
-    margin-bottom: 18px;
-    padding: 18px 20px;
-    /*background: #f3f6fa;*/
-    border-radius: 12px;
-    box-shadow: 0 1px 4px 0 rgba(180, 180, 180, 0.06);
-}
-
-a, .edit-btn, .add-user-btn {
-    display: inline-block;
-    margin: 0 8px 0 0;
-    padding: 10px 26px;
-    border-radius: 8px;
-    background: #e3eafc;
-    color: #2d2d2d;
-    border: 1.5px solid #b7c7e6;
-    font-weight: 500;
-    font-size: 1.08rem;
-    text-decoration: none;
-    transition: background 0.2s, color 0.2s, border 0.2s, box-shadow 0.2s;
-    box-shadow: 0 1px 4px 0 rgba(180, 180, 180, 0.06);
-    cursor: pointer;
-}
-
-a:hover, .edit-btn:hover, .add-user-btn:hover {
-    background: #f8e6e9;
-    color: #c94f7c;
-    border-color: #f8b7c7;
-}
-
-.delete-btn {
-    background: #f8e6e9;
-    color: #c94f7c;
-    border: 1.5px solid #f8b7c7;
-    font-weight: 500;
-    border-radius: 8px;
-    padding: 10px 26px;
-    font-size: 1.08rem;
-    margin-right: 8px;
-    margin-bottom: 5px;
-    transition: background 0.2s, color 0.2s, border 0.2s, box-shadow 0.2s;
-    box-shadow: 0 1px 4px 0 rgba(180, 180, 180, 0.06);
-    cursor: pointer;
-}
-
-.delete-btn:hover, .delete-btn:focus {
-    background: #e3eafc;
-    color: #2d2d2d;
-    border-color: #b7c7e6;
+    margin-bottom: 32px;
+    color: var(--accent);
+    letter-spacing: 1px;
 }
 
 form {
     display: flex;
     flex-direction: column;
-    gap: 18px;
-    margin-bottom: 18px;
+    gap: 22px;
+    margin-bottom: 24px;
 }
 
-form label {
+label {
+    font-size: 1rem;
     font-weight: 500;
-    margin-bottom: 4px;
-    color: #3a3a3a;
+    margin-bottom: 6px;
+    color: var(--text-main);
 }
 
-form input {
-    padding: 10px 14px;
-    border-radius: 7px;
-    border: 1.5px solid #e3eafc;
-    background: #f7f5f2;
-    color: #2d2d2d;
-    font-size: 1.08rem;
-    width: 100%;
-    box-sizing: border-box;
-    transition: border 0.2s, background 0.2s;
-}
-
-form input:focus {
-    border: 1.5px solid #b7c7e6;
-    background: #fffdfa;
+input[type="text"],
+input[type="number"],
+input[type="email"] {
+    padding: 12px 16px;
+    border: 1.5px solid #e0e0e0;
+    border-radius: var(--radius);
+    font-size: 1rem;
+    background: #f9f9fb;
+    color: var(--text-main);
+    transition: border var(--transition), box-shadow var(--transition);
     outline: none;
 }
 
-form button[type="submit"] {
-    background: #e3eafc;
-    color: #2d2d2d;
-    border: 1.5px solid #b7c7e6;
-    border-radius: 8px;
-    padding: 10px 26px;
-    font-size: 1.08rem;
-    font-weight: 500;
-    cursor: pointer;
-    margin-top: 10px;
-    transition: background 0.2s, color 0.2s, border 0.2s;
+input:focus {
+    border: 1.5px solid var(--accent);
+    box-shadow: 0 2px 8px 0 rgba(108, 99, 255, 0.07);
 }
 
-form button[type="submit"]:hover {
-    background: #f8e6e9;
-    color: #c94f7c;
-    border-color: #f8b7c7;
+button,
+.add-user-btn,
+.edit-btn,
+.delete-btn {
+    padding: 12px 28px;
+    border: none;
+    border-radius: var(--radius);
+    background: var(--accent);
+    color: var(--text-light);
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    margin-right: 12px;
+    margin-bottom: 8px;
+    transition: background var(--transition), color var(--transition), transform var(--transition);
+    outline: none;
+    display: inline-block;
+}
+
+button:hover,
+.add-user-btn:hover,
+.edit-btn:hover,
+.delete-btn:hover {
+    background: var(--accent2);
+    color: var(--text-main);
+    transform: translateY(-2px) scale(1.03);
+}
+
+a {
+    color: var(--accent);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color var(--transition);
+}
+
+a:hover {
+    color: var(--accent2);
 }
 
 .error-message {
-    color: #c94f7c;
-    font-size: 1rem;
-    margin-top: 2px;
-    margin-bottom: 2px;
-    text-align: left;
+    color: #ff4d4f;
+    font-size: 0.98rem;
+    margin-top: 4px;
+    font-weight: 500;
+}
+
+.users-list.grid-list {
+    margin: 40px auto 0 auto;
     width: 100%;
+    max-width: 1000px;
 }
 
-.main-header {
-    width: 100vw;
-    min-width: 0;
-    background: #f3f6fa;
-    border-bottom: 1.5px solid #e3eafc;
-    box-shadow: 0 2px 8px 0 rgba(180, 180, 180, 0.04);
-    margin-bottom: 0;
-    padding: 0;
-    position: relative;
-    left: 0;
-    top: 0;
-}
-
-.header-content {
-    width: 100%;
-    max-width: 900px;
-    margin: 0 auto;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 16px;
-    height: 64px;
-    box-sizing: border-box;
-    min-width: 0;
-}
-
-.logo {
-    font-size: 1.3rem;
-    font-weight: 700;
-    color: #3a3a3a;
-    letter-spacing: 0.03em;
-    white-space: nowrap;
-    transition: font-size 0.2s;
-    min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-}
-
-.theme-toggle {
-    background: none;
-    border: none;
-    font-size: 1.5rem;
-    cursor: pointer;
-    margin-left: 18px;
-    color: #3a3a3a;
-    transition: color 0.2s;
-    outline: none;
-    flex-shrink: 0;
-    align-self: center;
-}
-
-.theme-toggle:hover, .theme-toggle:focus {
-    color: #c94f7c;
-}
-
-.main-accent-btn {
-    background: #ffb7b7;
-    color: #1e1e1e;
-    border: 2px solid #ff6f61;
-    font-weight: 700;
-    font-size: 1.12rem;
-    box-shadow: 0 2px 8px 0 rgba(255, 111, 97, 0.08);
-    transition: background 0.2s, color 0.2s, border 0.2s, box-shadow 0.2s;
-}
-
-.main-accent-btn:hover, .main-accent-btn:focus {
-    background: #ff6f61;
-    color: #fffdfa;
-    border-color: #ffb7b7;
-    box-shadow: 0 4px 16px 0 rgba(255, 111, 97, 0.16);
-}
-
-/* Сетка для отображения пользователей в 3 колонки */
 .users-list.grid-list ul {
     display: grid;
-    grid-template-columns: repeat(3, 1fr); /* 3 колонки */
-    gap: 20px; /* Расстояние между элементами */
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
     padding: 0;
-    margin: 36px auto 0 auto;
-    max-width: 100%;
-    width: 100%;
-    box-sizing: border-box;
+    margin: 0;
+    list-style: none;
 }
 
-.users-list.grid-list ul li {
-    padding: 20px;
-    text-align: center;
-    font-size: 1.1rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    transition: color 0.2s;
-    background: none; /* Убираем фон */
-    border: none; /* Убираем рамки */
-    box-shadow: none; /* Убираем тени */
-}
-
-.users-list.grid-list ul li a {
-    font-size: 1.2rem;
+.users-list.grid-list li {
+    background: var(--accent);
+    color: var(--text-light);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 32px 18px;
+    font-size: 1.25rem;
     font-weight: 600;
-    color: #ffffff; /* Делаем текст белым */
-    text-decoration: none;
-    transition: color 0.2s;
+    text-align: center;
+    transition: background var(--transition), color var(--transition), transform var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80px;
     word-break: break-word;
-    white-space: normal;
-    width: 100%;
-    display: block;
+    cursor: pointer;
 }
 
-.users-list.grid-list ul li a:hover {
-    color: #ff6f61; /* Цвет текста при наведении */
-    text-decoration: underline;
+.users-list.grid-list li a {
+    color: var(--text-light);
+    font-size: 1.25rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: color var(--transition);
 }
 
-/* Адаптивность */
-@media (max-width: 1200px) {
-    .users-list.grid-list ul {
-        /* Удалено */
-    }
+.users-list.grid-list li:hover,
+.users-list.grid-list li:focus {
+    background: var(--accent2);
+    color: var(--text-main);
+    transform: translateY(-4px) scale(1.03);
+}
+
+.users-list.grid-list li a:hover {
+    color: var(--text-main);
 }
 
 @media (max-width: 900px) {
-    .container, .error-container {
-        max-width: 98vw;
-        padding: 18px 4vw 18px 4vw;
-    }
-
     .users-list.grid-list ul {
-        grid-template-columns: repeat(2, 1fr); /* 2 колонки */
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
     }
 
-    .users-list.grid-list ul li {
-        /* Удалено */
-    }
-
-    .main-accent-btn, .add-user-btn, .edit-btn, .delete-btn {
-        padding: 7px 10px;
-        font-size: 0.98rem;
-    }
-
-    .add-user-btn,
-    .edit-btn,
-    .delete-btn,
-    .main-accent-btn {
-        padding: 8px 16px; /* Уменьшаем отступы */
-        height: auto; /* Убираем растягивание */
-        line-height: 1.2; /* Устанавливаем нормальную высоту строки */
-        display: inline-block; /* Гарантируем, что кнопки не растягиваются */
-        text-align: center; /* Центрируем текст */
-        font-size: 1rem; /* Уменьшаем шрифт для компактности */
-    }
-}
-
-@media (max-width: 700px) {
-    .users-list.grid-list ul {
-        /* Удалено */
-    }
-
-    .users-list.grid-list ul li {
-        /* Удалено */
-    }
-
-    .main-accent-btn, .add-user-btn, .edit-btn, .delete-btn {
-        padding: 6px 4px;
-        font-size: 0.93rem;
-        margin: 0 2px 4px 0;
-    }
-
-    .logo {
-        display: none;
+    .container {
+        padding: 24px 8px 16px 8px;
     }
 
     .header-content {
-        padding: 0 8px;
-        height: 48px;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        gap: 0;
-    }
-
-    .add-user-btn,
-    .edit-btn,
-    .delete-btn,
-    .main-accent-btn {
-        padding: 6px 12px; /* Ещё меньше отступы */
-        font-size: 0.93rem; /* Уменьшаем шрифт */
-        margin: 0 2px 4px 0;
+        padding: 0 12px;
     }
 }
 
 @media (max-width: 600px) {
     .users-list.grid-list ul {
-        grid-template-columns: 1fr; /* 1 колонка */
-    }
-}
-
-@media (max-width: 400px) {
-    .container, .error-container {
-        padding: 2px 1vw 2px 1vw;
+        grid-template-columns: 1fr;
+        gap: 12px;
     }
 
-    .users-list.grid-list ul li {
-        /* Удалено */
+    .users-list.grid-list li {
+        padding: 18px 8px;
+        font-size: 1.05rem;
     }
 
-    .main-accent-btn, .add-user-btn, .edit-btn, .delete-btn {
-        padding: 4px 1px;
-        font-size: 0.89rem;
-    }
-
-    .add-user-btn,
-    .edit-btn,
-    .delete-btn,
-    .main-accent-btn {
-        padding: 4px 8px; /* Минимальные отступы */
-        font-size: 0.85rem; /* Ещё меньше шрифт */
-    }
-}
-
-/* Добавляем правило для десктопа, чтобы кнопки не растягивались по высоте */
-@media (min-width: 901px) {
-    .add-user-btn,
-    .edit-btn,
-    .delete-btn,
-    .main-accent-btn {
-        padding: 10px 20px; /* Уменьшаем отступы */
-        height: auto; /* Убираем растягивание */
-        line-height: 1.5; /* Устанавливаем нормальную высоту строки */
-        display: inline-block; /* Гарантируем, что кнопки не растягиваются */
-        text-align: center; /* Центрируем текст */
-    }
-
-    .users-list.grid-list {
-        max-width: 1200px; /* Увеличиваем максимальную ширину */
-        margin: 36px auto; /* Центрируем список */
-    }
-
-    .users-list.grid-list ul {
-        grid-template-columns: repeat(3, 1fr); /* 3 колонки */
-        gap: 30px; /* Увеличиваем расстояние между элементами */
-    }
-
-    .users-list.grid-list ul li {
-        padding: 24px 20px; /* Увеличиваем внутренние отступы */
-        font-size: 1.2rem; /* Увеличиваем шрифт */
+    .logo {
+        font-size: 1.1rem;
     }
 
     .container {
-        max-width: 800px; /* Увеличиваем максимальную ширину */
-        padding: 40px 24px; /* Увеличиваем внутренние отступы */
+        padding: 10px 2px 8px 2px;
+    }
+
+    .main-header {
+        min-width: 100vw;
+    }
+
+    .header-content {
+        padding: 0 4px;
     }
 }
 
-/* Тёмная тема */
-body.dark-theme {
-    background: #181c23;
-    color: #e6e6e6;
+.fade-in {
+    opacity: 0;
+    transform: translateY(16px);
+    animation: fadeInUp 0.7s cubic-bezier(.4, 0, .2, 1) forwards;
 }
 
-body.dark-theme .main-header {
-    background: #23272f;
-    border-bottom: 1.5px solid #23272f;
-    box-shadow: 0 2px 8px 0 rgba(30, 30, 30, 0.10);
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: none;
+    }
 }
 
-body.dark-theme .header-content .logo {
-    color: #f3f6fa;
+/* Для будущих карточек книг */
+.books-list.grid-list ul {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 36px;
+    padding: 0;
+    margin: 0;
+    list-style: none;
 }
 
-body.dark-theme .theme-toggle {
-    color: #f3f6fa;
+.books-list.grid-list li {
+    background: #fff;
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    padding: 32px 18px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-align: center;
+    transition: box-shadow var(--transition), transform var(--transition);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 180px;
+    cursor: pointer;
 }
 
-body.dark-theme .container,
-body.dark-theme .error-container {
-    background: #23272f;
-    color: #e6e6e6;
-    box-shadow: 0 4px 24px 0 rgba(30, 30, 30, 0.10), 0 1.5px 6px 0 rgba(30, 30, 30, 0.08);
+.books-list.grid-list li:hover {
+    box-shadow: 0 8px 32px 0 rgba(108, 99, 255, 0.13);
+    transform: translateY(-6px) scale(1.04);
 }
 
-body.dark-theme h1,
-body.dark-theme label,
-body.dark-theme p,
-body.dark-theme ul li,
-body.dark-theme .logo {
-    color: #f3f6fa;
+::-webkit-scrollbar {
+    width: 8px;
+    background: #eaeaea;
 }
 
-body.dark-theme ul li {
-    background: #23272f;
-    border: 1.5px solid #353b47;
-}
-
-body.dark-theme a,
-body.dark-theme .edit-btn,
-body.dark-theme .add-user-btn {
-    background: #23272f;
-    color: #e3eafc;
-    border: 1.5px solid #353b47;
-    box-shadow: 0 1px 4px 0 rgba(30, 30, 30, 0.10);
-}
-
-body.dark-theme a:hover,
-body.dark-theme .edit-btn:hover,
-body.dark-theme .add-user-btn:hover {
-    background: #353b47;
-    color: #f8e6e9;
-    border-color: #c94f7c;
-}
-
-body.dark-theme .delete-btn {
-    background: #353b47;
-    color: #f8e6e9;
-    border: 1.5px solid #c94f7c;
-}
-
-body.dark-theme .delete-btn:hover,
-body.dark-theme .delete-btn:focus {
-    background: #23272f;
-    color: #e3eafc;
-    border-color: #e3eafc;
-}
-
-body.dark-theme form input {
-    background: #181c23;
-    color: #e6e6e6;
-    border: 1.5px solid #353b47;
-}
-
-body.dark-theme form input:focus {
-    border: 1.5px solid #c94f7c;
-    background: #23272f;
-}
-
-body.dark-theme form button[type="submit"] {
-    background: #23272f;
-    color: #e3eafc;
-    border: 1.5px solid #353b47;
-}
-
-body.dark-theme form button[type="submit"]:hover {
-    background: #353b47;
-    color: #f8e6e9;
-    border-color: #c94f7c;
-}
-
-body.dark-theme .error-message {
-    color: #ffb4b4;
+::-webkit-scrollbar-thumb {
+    background: #d1d1e9;
+    border-radius: 8px;
 }

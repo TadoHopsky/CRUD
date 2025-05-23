@@ -5,40 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ошибка</title>
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/error-anim.css">
 </head>
 <body>
 <header class="main-header">
     <div class="header-content">
-        <span class="logo">Sprint Web App</span>
-        <button id="theme-toggle" class="theme-toggle" aria-label="Переключить тему">🌙</button>
+        <a href="/people/all" class="logo">Spring Web App</a>
     </div>
 </header>
-<div class="error-container" style="text-align: center;">
-    <div class="ascii-art">
-        <pre>
-  ______  ______  ______  ______  ______ 
- / _____)/ _____)(_____ \(_____ \(_____ \
-( (____ ( (____  _____) )_____) )_____) )
- \______)______)______/______/______/  
-        </pre>
+<div id="error-fade-bg"></div>
+<div class="error-anim-img-container">
+    <img id="error-anim-img" src="/img/Без%20названия.png" alt="Error image"/>
+</div>
+<div class="error-anim-img-container-left">
+    <img id="error-anim-img-left" src="/img/Без%20названия1.png" alt="Error image left"/>
+</div>
+<div class="error-container error-center-message">
+    <div style="font-size: 7rem; font-weight: 1200; letter-spacing: 0.1em; color: #fff; line-height: 1; margin-bottom: 16px;">
+        404
     </div>
     <h1>Произошла ошибка</h1>
     <p th:text="${error}"></p>
     <a href="/people/all">Вернуться на главную</a>
 </div>
-<script>
-    document.getElementById('theme-toggle').addEventListener('click', function () {
-        document.body.classList.toggle('dark-theme');
-        localStorage.setItem('theme', document.body.classList.contains('dark-theme') ? 'dark' : 'light');
-        this.textContent = document.body.classList.contains('dark-theme') ? '☀️' : '🌙';
-    });
-    (function () {
-        const theme = localStorage.getItem('theme');
-        if (theme === 'dark') {
-            document.body.classList.add('dark-theme');
-            document.getElementById('theme-toggle').textContent = '☀️';
-        }
-    })();
-</script>
+<script src="/js/error-anim.js"></script>
 </body>
 </html>
