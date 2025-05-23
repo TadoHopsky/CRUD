@@ -41,13 +41,13 @@ public class PeopleController {
     }
 
     @GetMapping("/{id}")
-    public String show(@PathVariable Integer id, Model model) {
+    public String show(@PathVariable Integer id, Model model) throws SQLException {
         model.addAttribute("people", dataAccessObject.show(id));
         return "show";
     }
 
     @GetMapping("/{id}/edit")
-    public String edit(@PathVariable Integer id, Model model) {
+    public String edit(@PathVariable Integer id, Model model) throws SQLException {
         model.addAttribute("people", dataAccessObject.show(id));
         return "edit";
     }

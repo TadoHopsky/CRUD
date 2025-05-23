@@ -15,26 +15,15 @@ public class DataAccessObject {
     public DataAccessObject(People people) {
     }
 
-    // Затычка пока не подключена БД
-//    {
-//        peopleList.add(new People(CURRENT_ID, 27, "Егор Антипов", "egor@antipov.com", "Moscow"));
-//        peopleList.add(new People(CURRENT_ID++, 31, "Анна Смирнова", "anna@smirnova.com", "Tomsk"));
-//        peopleList.add(new People(CURRENT_ID++, 34, "Иван Козлов", "ivan@kozlov.com", "Moscow"));
-//        peopleList.add(new People(CURRENT_ID++, 29, "Мария Соколова", "maria@sokolova.com", "Moscow"));
-//        peopleList.add(new People(CURRENT_ID++, 38, "Алексей Орлов", "alexey@orlov.com", "Moscow"));
-//        peopleList.add(new People(CURRENT_ID++, 26, "Ольга Белова", "olga@belova.com", "Moscow"));
-//        peopleList.add(new People(CURRENT_ID++, 40, "Дмитрий Павлов", "dmitry@pavlov.com", "Moscow"));
-//    }
-
-    private final String url = "jdbc:postgresql://localhost:5432/postgres";
-    private final String username = "postgres";
-    private final String password = "postgres";
-
+    // JDBC connection
     private static Connection connection;
 
-    {
+    static {
         try {
             Class.forName("org.postgresql.Driver");
+            String url = "jdbc:postgresql://localhost:5432/postgres";
+            String username = "postgres";
+            String password = "postgres";
             connection = DriverManager.getConnection(url, username, password
             );
         } catch (SQLException | ClassNotFoundException e) {
@@ -46,9 +35,8 @@ public class DataAccessObject {
         List<People> peopleList = new ArrayList<>();
         Statement statement = connection.createStatement();
         String sqlQuery = "select * from people";
-        
-        ResultSet resultSet = statement.executeQuery(sqlQuery);
 
+        ResultSet resultSet = statement.executeQuery(sqlQuery);
         while (resultSet.next()) {
             People p = new People();
             p.setId(resultSet.getInt("id"));
@@ -63,15 +51,30 @@ public class DataAccessObject {
     }
 
     public void saveUser(People people) {
+
+//        Statement statement = connection.
         people.setId(CURRENT_ID++);
         peopleList.add(people);
     }
 
-    public People show(int id) {
-        return peopleList.stream()
-                .filter(people -> people.getId() == id)
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("Пользователь с ID " + id + " не найден."));
+    public People show(int id) throws SQLException {
+        People p = new People();
+
+        String sql = "select * from people where id = " + id;
+        Statement statement = connection.createStatement();
+
+        ResultSet resultSet = statement.executeQuery(sql);
+
+        if (resultSet.next()) {
+            p.setId(resultSet.getInt("id"));
+            p.setAge(resultSet.getInt("age"));
+            p.setName(resultSet.getString("name"));
+            p.setEmail(resultSet.getString("email"));
+            p.setAddress(resultSet.getString("address"));
+        } else {
+            throw new RuntimeException("Пользователь с ID " + id + " не найден.");
+        }
+        return p;
     }
 
     public void removeUserById(Integer id) {
