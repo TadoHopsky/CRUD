@@ -8,6 +8,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.SQLException;
+
 @Controller
 @RequestMapping("/people")
 public class PeopleController {
@@ -18,7 +20,7 @@ public class PeopleController {
     }
 
     @GetMapping("/all")
-    public String index(Model model) {
+    public String index(Model model) throws SQLException {
         model.addAttribute("allUsers", dataAccessObject.index());
         return "people";
     }
