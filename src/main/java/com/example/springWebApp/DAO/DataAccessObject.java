@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 public class DataAccessObject {
-    private final List<People> peopleList = new ArrayList<>();
+    private int currentMaxID;
 
     public DataAccessObject(People people) {
     }
@@ -50,18 +50,11 @@ public class DataAccessObject {
     }
 
     public void saveUser(People people) throws SQLException {
-        int currentMaxID;
         String updateSQL = "insert into people values(?,?,?,?,?)";
-        String maxIdFromSQL = "select max(id) from people";
         PreparedStatement preparedStatement = connection.prepareStatement(updateSQL);
-        Statement statement = connection.createStatement();
 
-        ResultSet resultSet = statement.executeQuery(maxIdFromSQL);
-        if (resultSet.next()) {
-            currentMaxID = resultSet.getInt(1);
-        } else {
-            currentMaxID = 0;
-        }
+        findMaxId();
+
         preparedStatement.setInt(1, currentMaxID + 1);
         preparedStatement.setInt(2, people.getAge());
         preparedStatement.setString(3, people.getName());
@@ -69,6 +62,15 @@ public class DataAccessObject {
         preparedStatement.setString(5, people.getAddress());
 
         preparedStatement.executeUpdate();
+    }
+
+    public void findMaxId() throws SQLException {
+        String sql = "select max(id) from people";
+        Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(sql);
+        if (resultSet.next()) {
+            currentMaxID = resultSet.getInt(1);
+        }
     }
 
     public People show(int id) throws SQLException {
@@ -92,14 +94,25 @@ public class DataAccessObject {
     }
 
     public void removeUserById(Integer id) {
-        peopleList.removeIf(p -> p.getId() == id);
+        String sql = "delete from people where id = " + id;
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    public void updateUserById(int id, People newData) {
-        People person = peopleList.stream()
-                .filter(p -> p.getId() == id)
-                .findFirst()
-                .orElseThrow(() -> new RuntimeException("Пользователь с ID " + id + " не найден."));
-        person.copyUserInfoIntoNewPerson(newData);
+    public void updateUserById(int id, People newData) throws SQLException {
+        String sql = "update people set age = ?, name = ?, email = ?, address = ? where id = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+
+        preparedStatement.setInt(5, id);
+        preparedStatement.setInt(1, newData.getAge());
+        preparedStatement.setString(2, newData.getName());
+        preparedStatement.setString(3, newData.getEmail());
+        preparedStatement.setString(4, newData.getAddress());
+
+        preparedStatement.executeUpdate();
     }
 }
