@@ -32,11 +32,4 @@ public class People {
     @NotEmpty(message = "Can not be empty:(")
     @Size(min = 3, max = 40)
     private String address;
-
-    public void copyUserInfoIntoNewPerson(People newPerson) {
-        this.age = newPerson.getAge();
-        this.name = newPerson.getName();
-        this.email = newPerson.getEmail();
-        this.address = newPerson.getAddress();
-    }
 }
