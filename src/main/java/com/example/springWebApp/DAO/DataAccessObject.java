@@ -1,6 +1,7 @@
 package com.example.springWebApp.DAO;
 
 import com.example.springWebApp.Model.People;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.sql.*;
@@ -8,11 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class DataAccessObject {
     private int currentMaxID;
-
-    public DataAccessObject(People people) {
-    }
 
     // JDBC connection
     private static Connection connection;
@@ -76,10 +75,12 @@ public class DataAccessObject {
     public People show(int id) throws SQLException {
         People p = new People();
 
-        String sql = "select * from people where id = " + id;
-        Statement statement = connection.createStatement();
+        String sql = "select * from people where id = ?";
 
-        ResultSet resultSet = statement.executeQuery(sql);
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, id);
+
+        ResultSet resultSet = preparedStatement.executeQuery();
 
         if (resultSet.next()) {
             p.setId(resultSet.getInt("id"));
@@ -93,14 +94,12 @@ public class DataAccessObject {
         return p;
     }
 
-    public void removeUserById(Integer id) {
-        String sql = "delete from people where id = " + id;
-        try {
-            Statement statement = connection.createStatement();
-            statement.executeUpdate(sql);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+    public void removeUserById(Integer id) throws SQLException {
+        String sql = "delete from people where id = ?";
+        PreparedStatement preparedStatement = connection.prepareStatement(sql);
+        preparedStatement.setInt(1, id);
+
+        preparedStatement.executeUpdate();
     }
 
     public void updateUserById(int id, People newData) throws SQLException {

@@ -3,22 +3,21 @@ package com.example.springWebApp.controller;
 import com.example.springWebApp.DAO.DataAccessObject;
 import com.example.springWebApp.Model.People;
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.sql.SQLException;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/people")
 public class PeopleController {
     private final DataAccessObject dataAccessObject;
-
-    public PeopleController(DataAccessObject dataAccessObject) {
-        this.dataAccessObject = dataAccessObject;
-    }
-
+    
     @GetMapping("/all")
     public String index(Model model) throws SQLException {
         model.addAttribute("allUsers", dataAccessObject.index());
@@ -63,7 +62,7 @@ public class PeopleController {
     }
 
     @DeleteMapping("remove/{id}")
-    public String remove(@PathVariable Integer id) {
+    public String remove(@PathVariable Integer id) throws SQLException {
         dataAccessObject.removeUserById(id);
         return "redirect:/people/all";
     }
