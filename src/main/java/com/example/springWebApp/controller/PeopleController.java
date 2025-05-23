@@ -32,7 +32,7 @@ public class PeopleController {
     }
 
     @PostMapping("/new")
-    public String create(@ModelAttribute("people") @Valid People people, BindingResult bindingResult) {
+    public String create(@ModelAttribute("people") @Valid People people, BindingResult bindingResult) throws SQLException {
         if (bindingResult.hasErrors()) {
             return "new";
         }

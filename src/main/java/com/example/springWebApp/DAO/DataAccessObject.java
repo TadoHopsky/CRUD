@@ -10,7 +10,6 @@ import java.util.List;
 @Service
 public class DataAccessObject {
     private final List<People> peopleList = new ArrayList<>();
-    private int CURRENT_ID = 0;
 
     public DataAccessObject(People people) {
     }
@@ -32,9 +31,9 @@ public class DataAccessObject {
     }
 
     public List<People> index() throws SQLException {
+        String sqlQuery = "select * from people";
         List<People> peopleList = new ArrayList<>();
         Statement statement = connection.createStatement();
-        String sqlQuery = "select * from people";
 
         ResultSet resultSet = statement.executeQuery(sqlQuery);
         while (resultSet.next()) {
@@ -50,11 +49,26 @@ public class DataAccessObject {
         return peopleList;
     }
 
-    public void saveUser(People people) {
+    public void saveUser(People people) throws SQLException {
+        int currentMaxID;
+        String updateSQL = "insert into people values(?,?,?,?,?)";
+        String maxIdFromSQL = "select max(id) from people";
+        PreparedStatement preparedStatement = connection.prepareStatement(updateSQL);
+        Statement statement = connection.createStatement();
 
-//        Statement statement = connection.
-        people.setId(CURRENT_ID++);
-        peopleList.add(people);
+        ResultSet resultSet = statement.executeQuery(maxIdFromSQL);
+        if (resultSet.next()) {
+            currentMaxID = resultSet.getInt(1);
+        } else {
+            currentMaxID = 0;
+        }
+        preparedStatement.setInt(1, currentMaxID);
+        preparedStatement.setInt(2, people.getAge());
+        preparedStatement.setString(3, people.getName());
+        preparedStatement.setString(4, people.getEmail());
+        preparedStatement.setString(5, people.getAddress());
+
+        preparedStatement.executeUpdate();
     }
 
     public People show(int id) throws SQLException {
