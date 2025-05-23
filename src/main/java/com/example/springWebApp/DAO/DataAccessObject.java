@@ -62,7 +62,7 @@ public class DataAccessObject {
         } else {
             currentMaxID = 0;
         }
-        preparedStatement.setInt(1, currentMaxID);
+        preparedStatement.setInt(1, currentMaxID + 1);
         preparedStatement.setInt(2, people.getAge());
         preparedStatement.setString(3, people.getName());
         preparedStatement.setString(4, people.getEmail());
