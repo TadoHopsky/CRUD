@@ -1,14 +1,11 @@
 package com.example.springWebApp.DAO;
 
 import com.example.springWebApp.Model.People;
-import com.example.springWebApp.Model.PersonMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
-import java.sql.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -36,7 +33,7 @@ public class DataAccessObject {
     public People show(int id) {
         String sql = "select * from people where id = ?";
 
-        return jdbcTemplate.query(sql, new Object[]{id}, new BeanPropertyRowMapper<>(People.class))
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(People.class), id)
                 .stream()
                 .findAny()
                 .orElse(null);
