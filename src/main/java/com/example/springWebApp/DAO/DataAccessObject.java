@@ -18,12 +18,9 @@ public class DataAccessObject {
     }
 
     public void saveUser(People people) {
-        String sql = "insert into people values(?,?,?,?,?)";
-
-        int id = findMaxId();
+        String sql = "insert into people(age, name, email, address) values(?,?,?,?)";
 
         jdbcTemplate.update(sql,
-                id + 1,
                 people.getAge(),
                 people.getName(),
                 people.getEmail(),
@@ -47,14 +44,5 @@ public class DataAccessObject {
     public void updateUserById(int id, People newData) {
         String sql = "update people set age = ?, name = ?, email = ?, address = ? where id = ?";
         jdbcTemplate.update(sql, newData.getAge(), newData.getName(), newData.getEmail(), newData.getAddress(), id);
-    }
-
-    private int findMaxId() {
-        String sql = "select max(id) from people";
-        Integer result = jdbcTemplate.queryForObject(sql, Integer.class);
-        if (result == null) {
-            return 0;
-        }
-        return result;
     }
 }
