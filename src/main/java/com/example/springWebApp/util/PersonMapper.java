@@ -1,5 +1,6 @@
-package com.example.springWebApp.Model;
+package com.example.springWebApp.util;
 
+import com.example.springWebApp.Model.People;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

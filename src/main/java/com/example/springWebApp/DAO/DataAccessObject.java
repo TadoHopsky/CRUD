@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -27,13 +28,20 @@ public class DataAccessObject {
                 people.getAddress());
     }
 
-    public People show(int id) {
+    public People showByID(int id) {
         String sql = "select * from people where id = ?";
 
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(People.class), id)
                 .stream()
                 .findAny()
                 .orElse(null);
+    }
+
+    public Optional<People> showByEmail(String email) {
+        String sql = "select * from people where email = ?";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(People.class), email)
+                .stream()
+                .findAny();
     }
 
     public void removeUserById(Integer id) {

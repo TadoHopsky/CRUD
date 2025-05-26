@@ -30,6 +30,8 @@ public class People {
     private String email;
 
     @NotEmpty(message = "Can not be empty:(")
+    @Pattern(regexp = "[А-ЯA-Z][а-яА-Яa-zA-ZёЁ]+\\s*,\\s*[А-ЯA-Z][а-яА-Яa-zA-ZёЁ]+\\s*,\\s*\\d+",
+            message = "Address must be in the format: City, State, house number")
     @Size(min = 3, max = 40)
     private String address;
 }

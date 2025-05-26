@@ -2,21 +2,20 @@ package com.example.springWebApp.controller;
 
 import com.example.springWebApp.DAO.DataAccessObject;
 import com.example.springWebApp.Model.People;
+import com.example.springWebApp.util.PersonValidator;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-
-import java.sql.SQLException;
 
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/people")
 public class PeopleController {
     private final DataAccessObject dataAccessObject;
+    private final PersonValidator personValidator;
 
     @GetMapping("/all")
     public String index(Model model) {
@@ -32,6 +31,7 @@ public class PeopleController {
 
     @PostMapping("/new")
     public String create(@ModelAttribute("people") @Valid People people, BindingResult bindingResult) {
+        personValidator.validate(people, bindingResult);
         if (bindingResult.hasErrors()) {
             return "new";
         }
@@ -41,19 +41,20 @@ public class PeopleController {
 
     @GetMapping("/{id}")
     public String show(@PathVariable Integer id, Model model) {
-        model.addAttribute("people", dataAccessObject.show(id));
+        model.addAttribute("people", dataAccessObject.showByID(id));
         return "show";
     }
 
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable Integer id, Model model) {
-        model.addAttribute("people", dataAccessObject.show(id));
+        model.addAttribute("people", dataAccessObject.showByID(id));
         return "edit";
     }
 
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("people") @Valid People people, BindingResult bindingResult,
                          @PathVariable Integer id) {
+        personValidator.validate(people, bindingResult);
         if (bindingResult.hasErrors()) {
             return "edit";
         }
