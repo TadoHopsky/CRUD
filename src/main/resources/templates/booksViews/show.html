@@ -25,6 +25,25 @@
         <a th:href="@{/books/{id}/edit(id=${book.id})}" class="edit-btn">Изменить</a>
         <a href="/books/list">Список книг</a>
     </div>
+
+    <div style="margin-top:32px;">
+        <h2>Передать книгу пользователю</h2>
+        <form th:action="@{/books/{id}/assign(id=${book.id})}" method="post"
+              style="display:flex;gap:16px;align-items:center;">
+            <select name="userId" required style="padding:10px 16px;border-radius:var(--radius);font-size:1rem;">
+                <option value="" disabled selected>Выберите пользователя</option>
+                <option th:each="person : ${allUsers}" th:value="${person.id}" th:text="${person.name}"></option>
+            </select>
+            <button type="submit" class="main-accent-btn">Передать</button>
+        </form>
+    </div>
+    <div style="margin-top:32px;">
+        <h2>Освободить книгу</h2>
+        <form th:action="@{/books/{id}/free(id=${book.id})}" method="post" style="display:inline;">
+            <input type="hidden" name="_method" value="patch"/>
+            <button type="submit" class="main-accent-btn">Освободить</button>
+        </form>
+    </div>
 </div>
 </body>
 </html>

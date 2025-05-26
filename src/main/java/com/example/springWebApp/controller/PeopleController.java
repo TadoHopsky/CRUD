@@ -42,6 +42,7 @@ public class PeopleController {
     @GetMapping("/{id}")
     public String show(@PathVariable Integer id, Model model) {
         model.addAttribute("people", dataAccessObject.showByID(id));
+        model.addAttribute("booksForUser", dataAccessObject.getBooksByUserId(id));
         return "show";
     }
 

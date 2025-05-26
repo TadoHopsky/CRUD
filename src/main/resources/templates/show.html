@@ -26,6 +26,19 @@
         <a th:href="@{/people/{id}/edit(id=${people.id})}" class="edit-btn">Изменить</a>
         <a href="/people/all">Все пользователи</a>
     </div>
+
+    <div class="user-books" style="margin-top:32px;">
+        <h2>Книги пользователя</h2>
+        <ul th:if="${#lists.isEmpty(booksForUser)}">
+            <li style="color:#888;">У пользователя нет книг</li>
+        </ul>
+        <ul th:if="${!#lists.isEmpty(booksForUser)}">
+            <li th:each="book : ${booksForUser}">
+                <a th:href="@{/books/{id}(id=${book.id})}" th:text="${book.title}"></a>
+                <span th:text="' — ' + ${book.author}"></span>
+            </li>
+        </ul>
+    </div>
 </div>
 
 </body>

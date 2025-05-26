@@ -23,7 +23,14 @@ public class BooksController {
     @GetMapping("/{id}")
     public String showBook(@PathVariable int id, Model model) {
         model.addAttribute("book", dataAccessObject.showBookById(id));
+        model.addAttribute("allUsers", dataAccessObject.index());
         return "booksViews/show";
+    }
+
+    @PatchMapping("/{id}/free")
+    public String freeBook(@PathVariable int id) {
+        dataAccessObject.setBookFree(id);
+        return "redirect:/books/list";
     }
 
     @GetMapping("/new")
@@ -45,8 +52,14 @@ public class BooksController {
     }
 
     @PatchMapping("/{id}")
-    public String updateBook(@ModelAttribute("book") Book book, @PathVariable int id) {
+    public String updateBook(@ModelAttribute("book") Book book, @PathVariable int id) { // Дописать валидацию
         dataAccessObject.updateBookById(id, book);
+        return "redirect:/books/list";
+    }
+
+    @PostMapping("/{id}/assign")
+    public String assignBookToUser(@PathVariable int id, @RequestParam("userId") int userId) {
+        dataAccessObject.assignBookToUser(id, userId);
         return "redirect:/books/list";
     }
 

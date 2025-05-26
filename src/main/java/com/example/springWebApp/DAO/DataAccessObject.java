@@ -95,4 +95,19 @@ public class DataAccessObject {
         String sql = "update books set title = ?, author = ?, age = ? where id = ?";
         jdbcTemplate.update(sql, newData.getTitle(), newData.getAuthor(), newData.getAge(), id);
     }
+
+    public List<Book> getBooksByUserId(int id) {
+        String sql = "select * from books where people_id = ?";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Book.class), id);
+    }
+
+    public void assignBookToUser(int bookId, int userId) {
+        String sql = "update books set people_id = ? where id = ?";
+        jdbcTemplate.update(sql, userId, bookId);
+    }
+
+    public void setBookFree(Integer bookId) {
+        String sql = "update books set people_id = null where id = ?";
+        jdbcTemplate.update(sql, bookId);
+    }
 }
