@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Список книг</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header class="main-header">
+    <div class="header-content">
+        <a href="/people/all" class="logo">Spring Web App</a>
+    </div>
+</header>
+<div class="container fade-in">
+    <h1>Список книг</h1>
+    <a href="/books/new" class="add-user-btn main-accent-btn">Добавить книгу</a>
+    <a href="/people/all" class="add-user-btn" style="margin-left:12px;">Список пользователей</a>
+    <div class="books-list grid-list">
+        <ul>
+            <li th:each="book : ${books}">
+                <div class="book-icon">
+                    <!-- SVG иконка книги -->
+                    <svg width="40" height="40" viewBox="0 0 48 48" fill="none">
+                        <rect x="6" y="8" width="36" height="32" rx="4" fill="#6c63ff"/>
+                        <rect x="12" y="14" width="24" height="20" rx="2" fill="#fff"/>
+                        <rect x="16" y="18" width="16" height="2" rx="1" fill="#6c63ff"/>
+                        <rect x="16" y="22" width="12" height="2" rx="1" fill="#6c63ff"/>
+                        <rect x="16" y="26" width="8" height="2" rx="1" fill="#6c63ff"/>
+                    </svg>
+                </div>
+                <a th:href="@{/books/{id}(id=${book.getId()})}"
+                   th:text="${book.title}+', '+${book.author}+', '+${book.age}"></a>
+            </li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>

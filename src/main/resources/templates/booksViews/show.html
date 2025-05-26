@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Информация о книге</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header class="main-header">
+    <div class="header-content">
+        <a href="/people/all" class="logo">Spring Web App</a>
+    </div>
+</header>
+<div class="container">
+    <h1>Информация о книге</h1>
+    <div id="book-info">
+        <p><b>Название:</b> <span th:text="${book.title}"></span></p>
+        <p><b>Автор:</b> <span th:text="${book.author}"></span></p>
+        <p><b>Год:</b> <span th:text="${book.age}"></span></p>
+        <form th:action="@{/books/remove/{id}(id=${book.id})}" method="post" style="display:inline;">
+            <input type="hidden" name="_method" value="delete"/>
+            <button type="submit" class="delete-btn">Удалить</button>
+        </form>
+        <a th:href="@{/books/{id}/edit(id=${book.id})}" class="edit-btn">Изменить</a>
+        <a href="/books/list">Список книг</a>
+    </div>
+</div>
+</body>
+</html>

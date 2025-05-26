@@ -1,5 +1,6 @@
 package com.example.springWebApp.DAO;
 
+import com.example.springWebApp.Model.Book;
 import com.example.springWebApp.Model.People;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -13,6 +14,12 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class DataAccessObject {
     private final JdbcTemplate jdbcTemplate;
+
+    /*
+    ========================================================================
+    =============================== People =================================
+    ========================================================================
+     */
 
     public List<People> index() {
         return jdbcTemplate.query("select * from people", new BeanPropertyRowMapper<>(People.class));
@@ -52,5 +59,25 @@ public class DataAccessObject {
     public void updateUserById(int id, People newData) {
         String sql = "update people set age = ?, name = ?, email = ?, address = ? where id = ?";
         jdbcTemplate.update(sql, newData.getAge(), newData.getName(), newData.getEmail(), newData.getAddress(), id);
+    }
+
+
+    /*
+    ========================================================================
+    =============================== Books ==================================
+    ========================================================================
+     */
+
+    public List<Book> indexBooks() {
+        String sql = "select * from books";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Book.class));
+    }
+
+    public Book showBookById(int id) {
+        String sql = "select * from books where id = ?";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Book.class), id)
+                .stream()
+                .findAny()
+                .orElse(null);
     }
 }
