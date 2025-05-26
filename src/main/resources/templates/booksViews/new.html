@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Добавить книгу</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header class="main-header">
+    <div class="header-content">
+        <a href="/people/all" class="logo">Spring Web App</a>
+    </div>
+</header>
+<div class="container fade-in">
+    <h1>Добавить новую книгу</h1>
+    <form th:action="@{/books/new}" th:object="${book}" method="post">
+        <label for="title">Название</label>
+        <input type="text" id="title" th:field="*{title}" placeholder="Например: Война и мир" required/>
+
+        <label for="author">Автор</label>
+        <input type="text" id="author" th:field="*{author}" placeholder="Например: Лев Толстой" required/>
+
+        <label for="age">Год издания</label>
+        <input type="number" id="age" th:field="*{age}" placeholder="Например: 1869" min="0" max="2100" required/>
+
+        <button type="submit" class="main-accent-btn">Добавить</button>
+    </form>
+    <a href="/books/list" class="add-user-btn" style="margin-top:12px;">Назад к списку книг</a>
+</div>
+</body>
+</html>

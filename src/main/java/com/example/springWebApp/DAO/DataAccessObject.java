@@ -80,4 +80,19 @@ public class DataAccessObject {
                 .findAny()
                 .orElse(null);
     }
+
+    public void createNewBook(Book book) {
+        String sql = "insert into books(author, title, age) values(?,?,?)";
+        jdbcTemplate.update(sql, book.getAuthor(), book.getTitle(), book.getAge());
+    }
+
+    public void deleteBookById(int id) {
+        String sql = "delete from books where id = ?";
+        jdbcTemplate.update(sql, id);
+    }
+
+    public void updateBookById(int id, Book newData) {
+        String sql = "update books set title = ?, author = ?, age = ? where id = ?";
+        jdbcTemplate.update(sql, newData.getTitle(), newData.getAuthor(), newData.getAge(), id);
+    }
 }

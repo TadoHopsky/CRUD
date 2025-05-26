@@ -5,9 +5,7 @@ import com.example.springWebApp.Model.Book;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 
 @Controller
@@ -26,5 +24,35 @@ public class BooksController {
     public String showBook(@PathVariable int id, Model model) {
         model.addAttribute("book", dataAccessObject.showBookById(id));
         return "booksViews/show";
+    }
+
+    @GetMapping("/new")
+    public String newBook(Model model) {
+        model.addAttribute("book", new Book());
+        return "booksViews/new";
+    }
+
+    @PostMapping("/new")
+    public String createNewBook(@ModelAttribute("book") Book book) { // Дописать валидацию
+        dataAccessObject.createNewBook(book);
+        return "redirect:/books/list";
+    }
+
+    @GetMapping("/{id}/edit")
+    public String editBook(@PathVariable int id, Model model) {
+        model.addAttribute("book", dataAccessObject.showBookById(id));
+        return "booksViews/edit";
+    }
+
+    @PatchMapping("/{id}")
+    public String updateBook(@ModelAttribute("book") Book book, @PathVariable int id) {
+        dataAccessObject.updateBookById(id, book);
+        return "redirect:/books/list";
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteBook(@PathVariable Integer id) {
+        dataAccessObject.deleteBookById(id);
+        return "redirect:/books/list";
     }
 }

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактировать книгу</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header class="main-header">
+    <div class="header-content">
+        <a href="/people/all" class="logo">Spring Web App</a>
+    </div>
+</header>
+<div class="container fade-in">
+    <h1>Редактировать книгу</h1>
+    <form th:action="@{/books/{id}(id=${book.id})}" th:object="${book}" method="post">
+        <input type="hidden" name="_method" value="patch"/>
+        <label for="title">Название</label>
+        <input type="text" id="title" th:field="*{title}" required/>
+
+        <label for="author">Автор</label>
+        <input type="text" id="author" th:field="*{author}" required/>
+
+        <label for="age">Год издания</label>
+        <input type="number" id="age" th:field="*{age}" min="0" max="2100" required/>
+
+        <button type="submit" class="main-accent-btn">Сохранить</button>
+    </form>
+    <a href="/books/list" class="add-user-btn" style="margin-top:12px;">Назад к списку книг</a>
+</div>
+</body>
+</html>
