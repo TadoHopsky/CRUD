@@ -82,8 +82,8 @@ public class DataAccessObject {
     }
 
     public void createNewBook(Book book) {
-        String sql = "insert into books(author, title, age) values(?,?,?)";
-        jdbcTemplate.update(sql, book.getAuthor(), book.getTitle(), book.getAge());
+        String sql = "insert into books(author, title, age, people_id) values(?,?,?,?)";
+        jdbcTemplate.update(sql, book.getAuthor(), book.getTitle(), book.getAge(), book.getPeople_id());
     }
 
     public void deleteBookById(int id) {
@@ -92,8 +92,8 @@ public class DataAccessObject {
     }
 
     public void updateBookById(int id, Book newData) {
-        String sql = "update books set title = ?, author = ?, age = ? where id = ?";
-        jdbcTemplate.update(sql, newData.getTitle(), newData.getAuthor(), newData.getAge(), id);
+        String sql = "update books set title = ?, author = ?, age = ?, people_id = ? where id = ?";
+        jdbcTemplate.update(sql, newData.getTitle(), newData.getAuthor(), newData.getAge(), newData.getPeople_id(), id);
     }
 
     public List<Book> getBooksByUserId(int id) {

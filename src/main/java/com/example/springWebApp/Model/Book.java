@@ -16,4 +16,6 @@ public class Book {
     private String author;
     private String title;
     private int age;
+    private Integer people_id;
 }
+

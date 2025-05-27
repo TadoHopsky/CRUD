@@ -28,8 +28,8 @@
                         <rect x="16" y="26" width="8" height="2" rx="1" fill="#6c63ff"/>
                     </svg>
                 </div>
-                <a th:href="@{/books/{id}(id=${book.getId()})}"
-                   th:text="${book.title}+', '+${book.author}+', '+${book.age}"></a>
+                <a th:href="@{/books/{id}(id=${book.id})}"
+                   th:text="${book.title} + ', ' + ${book.author} + (book.age != null ? ', ' + book.age : '')"></a>
             </li>
         </ul>
     </div>

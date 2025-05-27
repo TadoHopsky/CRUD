@@ -22,7 +22,13 @@ public class BooksController {
 
     @GetMapping("/{id}")
     public String showBook(@PathVariable int id, Model model) {
-        model.addAttribute("book", dataAccessObject.showBookById(id));
+        Book book = dataAccessObject.showBookById(id);
+        model.addAttribute("book", book);
+
+        if (book.getPeople_id() != null) {
+            model.addAttribute("userInModel", dataAccessObject.showByID(book.getPeople_id()));
+        }
+
         model.addAttribute("allUsers", dataAccessObject.index());
         return "booksViews/show";
     }
@@ -36,6 +42,7 @@ public class BooksController {
     @GetMapping("/new")
     public String newBook(Model model) {
         model.addAttribute("book", new Book());
+        model.addAttribute("allUsers", dataAccessObject.index());
         return "booksViews/new";
     }
 
@@ -48,6 +55,7 @@ public class BooksController {
     @GetMapping("/{id}/edit")
     public String editBook(@PathVariable int id, Model model) {
         model.addAttribute("book", dataAccessObject.showBookById(id));
+        model.addAttribute("allUsers", dataAccessObject.index());
         return "booksViews/edit";
     }
 
