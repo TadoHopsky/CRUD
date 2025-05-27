@@ -81,6 +81,13 @@ public class DataAccessObject {
                 .orElse(null);
     }
 
+    public Optional<Book> showBookByTitle(String title) {
+        String sql = "select * from books where title = ?";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Book.class), title)
+                .stream()
+                .findAny();
+    }
+
     public void createNewBook(Book book) {
         String sql = "insert into books(author, title, age, people_id) values(?,?,?,?)";
         jdbcTemplate.update(sql, book.getAuthor(), book.getTitle(), book.getAge(), book.getPeople_id());

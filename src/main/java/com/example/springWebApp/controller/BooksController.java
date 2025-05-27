@@ -2,9 +2,12 @@ package com.example.springWebApp.controller;
 
 import com.example.springWebApp.DAO.DataAccessObject;
 import com.example.springWebApp.Model.Book;
+import com.example.springWebApp.util.BookValidator;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class BooksController {
     private final DataAccessObject dataAccessObject;
+    private final BookValidator bookValidator;
 
     @GetMapping("/list")
     public String list(Model model) {
@@ -47,7 +51,11 @@ public class BooksController {
     }
 
     @PostMapping("/new")
-    public String createNewBook(@ModelAttribute("book") Book book) { // Дописать валидацию
+    public String createNewBook(@ModelAttribute("book") @Valid Book book, BindingResult bindingResult) {
+        bookValidator.validate(book, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "booksViews/new";
+        }
         dataAccessObject.createNewBook(book);
         return "redirect:/books/list";
     }
@@ -60,7 +68,12 @@ public class BooksController {
     }
 
     @PatchMapping("/{id}")
-    public String updateBook(@ModelAttribute("book") Book book, @PathVariable int id) { // Дописать валидацию
+    public String updateBook(@ModelAttribute("book") @Valid Book book, BindingResult bindingResult,
+                             @PathVariable int id) {
+        bookValidator.validate(book, bindingResult);
+        if (bindingResult.hasErrors()) {
+            return "booksViews/edit";
+        }
         dataAccessObject.updateBookById(id, book);
         return "redirect:/books/list";
     }

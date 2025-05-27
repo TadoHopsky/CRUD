@@ -20,7 +20,7 @@
             <li th:each="book : ${books}">
                 <div class="book-icon">
                     <!-- SVG иконка книги -->
-                    <svg width="40" height="40" viewBox="0 0 48 48" fill="none">
+                    <svg width="80" height="80" viewBox="0 0 48 48" fill="none">
                         <rect x="6" y="8" width="36" height="32" rx="4" fill="#6c63ff"/>
                         <rect x="12" y="14" width="24" height="20" rx="2" fill="#fff"/>
                         <rect x="16" y="18" width="16" height="2" rx="1" fill="#6c63ff"/>
@@ -29,7 +29,7 @@
                     </svg>
                 </div>
                 <a th:href="@{/books/{id}(id=${book.id})}"
-                   th:text="${book.title} + ', ' + ${book.author} + (book.age != null ? ', ' + book.age : '')"></a>
+                   th:text="${book.title} + ', ' + ${book.author} + ', ' + ${book.age}"></a>
             </li>
         </ul>
     </div>
