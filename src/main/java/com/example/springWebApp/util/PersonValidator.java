@@ -1,7 +1,7 @@
 package com.example.springWebApp.util;
 
 
-import com.example.springWebApp.DAO.DataAccessObject;
+import com.example.springWebApp.DAO.PeopleService;
 import com.example.springWebApp.Model.People;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
@@ -11,7 +11,7 @@ import org.springframework.validation.Validator;
 @Component
 @RequiredArgsConstructor
 public class PersonValidator implements Validator {
-    private final DataAccessObject dataAccessObject;
+    private final PeopleService peopleService;
 
     @Override
     public boolean supports(Class<?> clazz) {
@@ -22,7 +22,7 @@ public class PersonValidator implements Validator {
     public void validate(Object target, Errors errors) {
         People people = (People) target;
 
-        if (dataAccessObject.showByEmail(people.getEmail()).isPresent()) {
+        if (peopleService.showByEmail(people.getEmail()).isPresent()) {
             errors.rejectValue("email", "", "This email is already taken");
         }
     }

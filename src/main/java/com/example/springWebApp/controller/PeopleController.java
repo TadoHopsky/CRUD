@@ -1,6 +1,7 @@
 package com.example.springWebApp.controller;
 
-import com.example.springWebApp.DAO.DataAccessObject;
+import com.example.springWebApp.DAO.BookService;
+import com.example.springWebApp.DAO.PeopleService;
 import com.example.springWebApp.Model.People;
 import com.example.springWebApp.util.PersonValidator;
 import jakarta.validation.Valid;
@@ -14,12 +15,13 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @RequestMapping("/people")
 public class PeopleController {
-    private final DataAccessObject dataAccessObject;
+    private final PeopleService peopleService;
+    private final BookService bookService;
     private final PersonValidator personValidator;
 
     @GetMapping("/all")
     public String index(Model model) {
-        model.addAttribute("allUsers", dataAccessObject.index());
+        model.addAttribute("allUsers", peopleService.index());
         return "people";
     }
 
@@ -35,20 +37,20 @@ public class PeopleController {
         if (bindingResult.hasErrors()) {
             return "new";
         }
-        dataAccessObject.saveUser(people);
+        peopleService.saveUser(people);
         return "redirect:/people/all";
     }
 
     @GetMapping("/{id}")
     public String show(@PathVariable Integer id, Model model) {
-        model.addAttribute("people", dataAccessObject.showByID(id));
-        model.addAttribute("booksForUser", dataAccessObject.getBooksByUserId(id));
+        model.addAttribute("people", peopleService.showByID(id));
+        model.addAttribute("booksForUser", bookService.getBooksByUserId(id));
         return "show";
     }
 
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable Integer id, Model model) {
-        model.addAttribute("people", dataAccessObject.showByID(id));
+        model.addAttribute("people", peopleService.showByID(id));
         return "edit";
     }
 
@@ -59,13 +61,13 @@ public class PeopleController {
         if (bindingResult.hasErrors()) {
             return "edit";
         }
-        dataAccessObject.updateUserById(id, people);
+        peopleService.updateUserById(id, people);
         return "redirect:/people/all";
     }
 
     @DeleteMapping("remove/{id}")
     public String remove(@PathVariable Integer id) {
-        dataAccessObject.removeUserById(id);
+        peopleService.removeUserById(id);
         return "redirect:/people/all";
     }
 }

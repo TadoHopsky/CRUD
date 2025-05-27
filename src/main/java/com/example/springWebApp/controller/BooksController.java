@@ -1,6 +1,7 @@
 package com.example.springWebApp.controller;
 
-import com.example.springWebApp.DAO.DataAccessObject;
+import com.example.springWebApp.DAO.BookService;
+import com.example.springWebApp.DAO.PeopleService;
 import com.example.springWebApp.Model.Book;
 import com.example.springWebApp.util.BookValidator;
 import jakarta.validation.Valid;
@@ -15,38 +16,39 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/books")
 @RequiredArgsConstructor
 public class BooksController {
-    private final DataAccessObject dataAccessObject;
+    private final PeopleService peopleService;
+    private final BookService bookService;
     private final BookValidator bookValidator;
 
     @GetMapping("/list")
     public String list(Model model) {
-        model.addAttribute("books", dataAccessObject.indexBooks());
+        model.addAttribute("books", bookService.indexBooks());
         return "booksViews/list";
     }
 
     @GetMapping("/{id}")
     public String showBook(@PathVariable int id, Model model) {
-        Book book = dataAccessObject.showBookById(id);
+        Book book = bookService.showBookById(id);
         model.addAttribute("book", book);
 
         if (book.getPeople_id() != null) {
-            model.addAttribute("userInModel", dataAccessObject.showByID(book.getPeople_id()));
+            model.addAttribute("userInModel", peopleService.showByID(book.getPeople_id()));
         }
 
-        model.addAttribute("allUsers", dataAccessObject.index());
+        model.addAttribute("allUsers", peopleService.index());
         return "booksViews/show";
     }
 
     @PatchMapping("/{id}/free")
     public String freeBook(@PathVariable int id) {
-        dataAccessObject.setBookFree(id);
+        bookService.setBookFree(id);
         return "redirect:/books/list";
     }
 
     @GetMapping("/new")
     public String newBook(Model model) {
         model.addAttribute("book", new Book());
-        model.addAttribute("allUsers", dataAccessObject.index());
+        model.addAttribute("allUsers", peopleService.index());
         return "booksViews/new";
     }
 
@@ -56,14 +58,14 @@ public class BooksController {
         if (bindingResult.hasErrors()) {
             return "booksViews/new";
         }
-        dataAccessObject.createNewBook(book);
+        bookService.createNewBook(book);
         return "redirect:/books/list";
     }
 
     @GetMapping("/{id}/edit")
     public String editBook(@PathVariable int id, Model model) {
-        model.addAttribute("book", dataAccessObject.showBookById(id));
-        model.addAttribute("allUsers", dataAccessObject.index());
+        model.addAttribute("book", bookService.showBookById(id));
+        model.addAttribute("allUsers", peopleService.index());
         return "booksViews/edit";
     }
 
@@ -74,19 +76,19 @@ public class BooksController {
         if (bindingResult.hasErrors()) {
             return "booksViews/edit";
         }
-        dataAccessObject.updateBookById(id, book);
+        bookService.updateBookById(id, book);
         return "redirect:/books/list";
     }
 
     @PostMapping("/{id}/assign")
     public String assignBookToUser(@PathVariable int id, @RequestParam("userId") int userId) {
-        dataAccessObject.assignBookToUser(id, userId);
+        bookService.assignBookToUser(id, userId);
         return "redirect:/books/list";
     }
 
     @DeleteMapping("/{id}")
     public String deleteBook(@PathVariable Integer id) {
-        dataAccessObject.deleteBookById(id);
+        bookService.deleteBookById(id);
         return "redirect:/books/list";
     }
 }
