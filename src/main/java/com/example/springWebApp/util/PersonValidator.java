@@ -26,6 +26,8 @@ public class PersonValidator implements Validator {
 
         Optional<People> existingUser = peopleService.showByEmail(people.getEmail());
 
+        System.out.println(people.getEmail());
+
         if (existingUser.isPresent() && !existingUser.get().getPeople_id().equals(people.getPeople_id())) {
             errors.rejectValue("email", "", "This email is already taken");
         }

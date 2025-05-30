@@ -41,10 +41,6 @@ public class PeopleService {
         try {
             session.beginTransaction();
             people = session.find(People.class, id);
-            if (people != null) {
-                System.out.println("=======================================================");
-                System.out.println("People with ID " + id + ": " + people);
-            }
             session.getTransaction().commit();
         } finally {
             session.close();

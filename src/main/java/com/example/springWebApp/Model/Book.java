@@ -32,10 +32,15 @@ public class Book {
     @Max(2025)
     private Integer age;
 
-
-    private Integer people_id;
-
     @ManyToOne
     @JoinColumn(name = "people_id", referencedColumnName = "people_id")
     private People people;
+
+    public Book(People people, Integer age, String title, String author, Integer book_id) {
+        this.people = people;
+        this.age = age;
+        this.title = title;
+        this.author = author;
+        this.book_id = book_id;
+    }
 }
