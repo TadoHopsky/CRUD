@@ -29,7 +29,9 @@ public class People {
     @Column(name = "email")
     private String email;
 
-
     @Column(name = "people_address")
     private String address;
+
+    @Transient
+    public Boolean isEditMode;
 }

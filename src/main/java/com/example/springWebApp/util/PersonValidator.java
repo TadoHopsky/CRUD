@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+import java.util.List;
 import java.util.Optional;
 
 /*
@@ -29,12 +30,22 @@ public class PersonValidator implements Validator {
     public void validate(Object target, Errors errors) {
         People people = (People) target;
 
-        Optional<People> existingUser = peopleService.showByEmail(people.getEmail());
+        System.out.println(people.isEditMode);
 
-        System.out.println(people.getEmail());
+        if (!people.getIsEditMode()) {
+            Optional<People> existingUser = peopleService.showByEmail(people.getEmail());
+            System.out.println(people.getEmail());
 
-        if (existingUser.isPresent() && !existingUser.get().getPeople_id().equals(people.getPeople_id())) {
-            errors.rejectValue("email", "", "This email is already taken");
+            if (existingUser.isPresent()) {
+                errors.rejectValue("email", "", "This email is already taken");
+            }
+        } else {
+            List<People> peopleList = peopleService.index();
+            for (People p : peopleList) {
+                if (p.getEmail().equals(people.getEmail())) {
+                    errors.rejectValue("email", "", "This email is already taken");
+                }
+            }
         }
     }
 }

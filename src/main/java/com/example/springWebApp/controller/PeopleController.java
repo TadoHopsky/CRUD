@@ -33,6 +33,7 @@ public class PeopleController {
 
     @PostMapping("/new")
     public String create(@ModelAttribute("people") @Valid People people, BindingResult bindingResult) {
+        people.setIsEditMode(Boolean.FALSE);
         personValidator.validate(people, bindingResult);
         if (bindingResult.hasErrors()) {
             return "new";
@@ -57,6 +58,7 @@ public class PeopleController {
     @PatchMapping("/{id}")
     public String update(@ModelAttribute("people") @Valid People people, BindingResult bindingResult,
                          @PathVariable Integer id) {
+        people.setIsEditMode(Boolean.TRUE);
         personValidator.validate(people, bindingResult);
         if (bindingResult.hasErrors()) {
             return "edit";
