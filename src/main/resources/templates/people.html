@@ -19,7 +19,7 @@
     <div class="users-list grid-list">
         <ul>
             <li th:each="person : ${allUsers}">
-                <a th:href="@{/people/{id}(id=${person.getId()})}" th:text="${person.getName()}"></a>
+                <a th:href="@{/people/{id}(id=${person.getPeople_id()})}" th:text="${person.getName()}"></a>
             </li>
         </ul>
     </div>

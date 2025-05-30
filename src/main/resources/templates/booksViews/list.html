@@ -28,7 +28,7 @@
                         <rect x="16" y="26" width="8" height="2" rx="1" fill="#6c63ff"/>
                     </svg>
                 </div>
-                <a th:href="@{/books/{id}(id=${book.id})}"
+                <a th:href="@{/books/{id}(id=${book.book_id})}"
                    th:text="${book.title} + ', ' + ${book.author} + ', ' + ${book.age}"></a>
             </li>
         </ul>

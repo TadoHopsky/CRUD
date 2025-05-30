@@ -1,5 +1,6 @@
 package com.example.springWebApp.Model;
 
+import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,18 +8,19 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.stereotype.Component;
 
+@Entity
 @Component
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class Book {
-    private int id;
+    @Id
+    @GeneratedValue(strategy = jakarta.persistence.GenerationType.IDENTITY)
+    private Integer book_id;
 
     @NotEmpty
     @Size(min = 2, max = 50)
-    @Pattern(regexp = "[А-ЯЁ][а-яё]+\\s[А-ЯЁ][а-яё]+\\s[А-ЯЁ][а-яё]+",
-            message = "Имя автора должно быть в формате: Имя Отчество Фамилия")
     private String author;
 
     @NotEmpty
@@ -28,8 +30,12 @@ public class Book {
     @NotNull
     @Min(0)
     @Max(2025)
-    private int age;
+    private Integer age;
+
 
     private Integer people_id;
-}
 
+    @ManyToOne
+    @JoinColumn(name = "people_id", referencedColumnName = "people_id")
+    private People people;
+}

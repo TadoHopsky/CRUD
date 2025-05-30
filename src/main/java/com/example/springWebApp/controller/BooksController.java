@@ -31,8 +31,8 @@ public class BooksController {
         Book book = bookService.showBookById(id);
         model.addAttribute("book", book);
 
-        if (book.getPeople_id() != null) {
-            model.addAttribute("userInModel", peopleService.showByID(book.getPeople_id()));
+        if (book.getPeople() != null) {
+            model.addAttribute("userInModel", book.getPeople());
         }
 
         model.addAttribute("allUsers", peopleService.index());

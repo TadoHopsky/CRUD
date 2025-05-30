@@ -14,7 +14,7 @@
 </header>
 <div class="container">
     <h1>Редактировать пользователя</h1>
-    <form th:action="@{/people/{id}(id=${people.id})}" th:object="${people}" method="post">
+    <form th:action="@{/people/{id}(id=${people.people_id})}" th:object="${people}" method="post">
         <input type="hidden" name="_method" value="patch"/>
         <div th:if="${#fields.hasGlobalErrors()}">
             <p class="error-message" th:each="err : ${#fields.globalErrors()}" th:text="${err}"></p>
@@ -40,7 +40,7 @@
             <div class="error-message" th:if="${#fields.hasErrors('address')}" th:errors="*{address}"></div>
         </div>
         <button type="submit">Сохранить</button>
-        <a th:href="@{/people/{id}(id=${people.id})}">Отмена</a>
+        <a th:href="@{/people/{id}(id=${people.people_id})}">Отмена</a>
     </form>
 </div>
 </body>

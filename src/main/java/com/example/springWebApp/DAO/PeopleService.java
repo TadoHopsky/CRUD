@@ -1,10 +1,9 @@
 package com.example.springWebApp.DAO;
 
-import com.example.springWebApp.Model.Book;
 import com.example.springWebApp.Model.People;
 import lombok.RequiredArgsConstructor;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,51 +12,92 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class PeopleService {
-    private final JdbcTemplate jdbcTemplate;
-
-    /*
-    ========================================================================
-    =============================== People =================================
-    ========================================================================
-     */
+    private final SessionFactory sessionFactory;
 
     public List<People> index() {
-        return jdbcTemplate.query("select * from people", new BeanPropertyRowMapper<>(People.class));
+        Session session = sessionFactory.openSession();
+        List<People> peopleList;
+        try {
+            session.beginTransaction();
+            peopleList = session.createQuery("from People ", People.class).list();
+            session.getTransaction().commit();
+        } finally {
+            session.close();
+        }
+        return peopleList;
     }
 
     public void saveUser(People people) {
-        String sql = "insert into people(age, name, email, address) values(?,?,?,?)";
-
-        jdbcTemplate.update(sql,
-                people.getAge(),
-                people.getName(),
-                people.getEmail(),
-                people.getAddress());
+        Session session = sessionFactory.openSession();
+        session.beginTransaction();
+        session.persist(people);
+        session.getTransaction().commit();
+        session.close();
     }
 
-    public People showByID(int id) {
-        String sql = "select * from people where id = ?";
-
-        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(People.class), id)
-                .stream()
-                .findAny()
-                .orElse(null);
+    public People showByID(Integer id) {
+        Session session = sessionFactory.openSession();
+        People people;
+        try {
+            session.beginTransaction();
+            people = session.find(People.class, id);
+            if (people != null) {
+                System.out.println("=======================================================");
+                System.out.println("People with ID " + id + ": " + people);
+            }
+            session.getTransaction().commit();
+        } finally {
+            session.close();
+        }
+        return people;
     }
 
     public Optional<People> showByEmail(String email) {
-        String sql = "select * from people where email = ?";
-        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(People.class), email)
-                .stream()
-                .findAny();
+        Session session = sessionFactory.openSession();
+        People people;
+        try {
+            session.beginTransaction();
+            people = session.createQuery("from People where email = :email", People.class)
+                    .setParameter("email", email)
+                    .uniqueResult();
+            session.getTransaction().commit();
+        } finally {
+            session.close();
+        }
+        return Optional.ofNullable(people);
     }
 
     public void removeUserById(Integer id) {
-        String sql = "delete from people where id = ?";
-        jdbcTemplate.update(sql, id);
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            People people = session.find(People.class, id);
+            if (people != null) {
+                session.remove(people);
+            }
+            session.getTransaction().commit();
+        }
     }
 
-    public void updateUserById(int id, People newData) {
-        String sql = "update people set age = ?, name = ?, email = ?, address = ? where id = ?";
-        jdbcTemplate.update(sql, newData.getAge(), newData.getName(), newData.getEmail(), newData.getAddress(), id);
+    public void updateUserById(Integer id, People newData) {
+        try (Session session = sessionFactory.openSession()) {
+            session.beginTransaction();
+            People people = session.find(People.class, id);
+            if (people != null) {
+                if (!people.getName().equals(newData.getName())) {
+                    people.setName(newData.getName());
+                }
+                if (!people.getEmail().equals(newData.getEmail())) {
+                    people.setEmail(newData.getEmail());
+                }
+                if (!people.getAddress().equals(newData.getAddress())) {
+                    people.setAddress(newData.getAddress());
+                }
+                if (!people.getAge().equals(newData.getAge())) {
+                    people.setAge(newData.getAge());
+                }
+                session.merge(people);
+            }
+            session.getTransaction().commit();
+        }
     }
 }
