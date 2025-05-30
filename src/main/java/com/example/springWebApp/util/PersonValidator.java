@@ -10,6 +10,11 @@ import org.springframework.validation.Validator;
 
 import java.util.Optional;
 
+/*
+ *   Переписать нахуй это гавно
+ *   Валидация не работает
+ */
+
 @Component
 @RequiredArgsConstructor
 public class PersonValidator implements Validator {

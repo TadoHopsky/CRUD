@@ -10,6 +10,8 @@
 <header class="main-header">
     <div class="header-content">
         <a href="/people/all" class="logo">Spring Web App</a>
+        <a href="/books/list" class="header-btn">Список книг</a>
+        <a href="/people/all" class="header-btn">Список пользователей</a>
     </div>
 </header>
 <div class="container">
@@ -22,23 +24,21 @@
             <input type="hidden" name="_method" value="delete"/>
             <button type="submit" class="delete-btn">Удалить</button>
         </form>
-        <a th:href="@{/books/{id}/edit(id=${book.id})}" class="edit-btn">Изменить</a>
-        <a href="/books/list">Список книг</a>
+        <a th:href="@{/books/{id}/edit(id=${book.book_id})}" class="edit-btn">Изменить</a>
     </div>
 
     <div style="margin-top:32px;">
-        <div th:if="${book.people_id != null}">
+        <div th:if="${book.people != null}">
             <h2>Владелец книги</h2>
             <p>
                 <b>Имя:</b>
-                <span th:text="${userInModel != null ? userInModel.name : 'Неизвестно'}"></span>
+                <span th:text="${book.people.name}"></span>
             </p>
             <form th:action="@{/books/{id}/free(id=${book.book_id})}" method="post" style="display:inline;">
-                <input type="hidden" name="_method" value="patch"/>
                 <button type="submit" class="main-accent-btn">Освободить</button>
             </form>
         </div>
-        <div th:if="${book.people_id == null}">
+        <div th:if="${book.people == null}">
             <h2>Передать книгу пользователю</h2>
             <form th:action="@{/books/{id}/assign(id=${book.book_id})}" method="post"
                   style="display:flex;gap:16px;align-items:center;">

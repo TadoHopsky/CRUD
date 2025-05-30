@@ -31,18 +31,8 @@ public class BooksController {
         Book book = bookService.showBookById(id);
         model.addAttribute("book", book);
 
-        if (book.getPeople() != null) {
-            model.addAttribute("userInModel", book.getPeople());
-        }
-
         model.addAttribute("allUsers", peopleService.index());
         return "booksViews/show";
-    }
-
-    @PatchMapping("/{id}/free")
-    public String freeBook(@PathVariable int id) {
-        bookService.setBookFree(id);
-        return "redirect:/books/list";
     }
 
     @GetMapping("/new")
@@ -80,15 +70,21 @@ public class BooksController {
         return "redirect:/books/list";
     }
 
-    @PostMapping("/{id}/assign")
-    public String assignBookToUser(@PathVariable int id, @RequestParam("userId") int userId) {
-        bookService.assignBookToUser(id, userId);
-        return "redirect:/books/list";
-    }
-
     @DeleteMapping("/{id}")
     public String deleteBook(@PathVariable Integer id) {
         bookService.deleteBookById(id);
         return "redirect:/books/list";
+    }
+
+    @PostMapping("/{id}/assign")
+    public String assignBook(@PathVariable int id, @RequestParam("userId") int userId) {
+        bookService.assignBookToUser(id, userId);
+        return "redirect:/books/{id}";
+    }
+
+    @PostMapping("/{id}/free")
+    public String freeBook(@PathVariable int id) {
+        bookService.setBookFree(id);
+        return "redirect:/books/{id}";
     }
 }
